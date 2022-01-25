@@ -15,6 +15,9 @@ export function breaks({ values, method, nb, precision }){
     case "equal":
       breaks = equal(values, nb);
       break;
+    case "jenks":
+        breaks = jenks(values, nb);
+        break;
   }
 
 if (Number.isInteger(+precision)){
