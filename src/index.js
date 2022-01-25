@@ -5,3 +5,4 @@ export {quantile} from "./method-quantile.js";
 export {equal} from "./method-equal.js";
 export {jenks} from "./method-jenks.js";
 export {shape} from "./shape.js";
+export {view} from "./view.js";
