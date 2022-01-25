@@ -2,6 +2,7 @@ import {rounding} from "./rounding.js";
 import {q6} from "./method-q6.js";
 import {quantile} from "./method-quantile.js";
 import {equal} from "./method-equal.js";
+import {jenks} from "./method-jenks.js";
 
 export function breaks({ values, method, nb, precision }){
   let breaks;
