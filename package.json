@@ -1,6 +1,6 @@
 {
   "name": "statsbreaks",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A javascript package to group the values of a statistical series into classes",
   "main": "src/index.js",
   "module": "src/index.js",
