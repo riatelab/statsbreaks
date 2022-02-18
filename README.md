@@ -1,6 +1,7 @@
 # statsbreaks
 
-statsbreaks is javascript package to make data classification for choropleth maps.
+**statsbreaks** is a javascript package whose objective is to split (to classify/to discretize) a quantitative data set into a (k) number of classes or thematic categories.
+The general aim is to create a choropleth map, for example with **Bertin.js:choropleth**.
 
 ## 1. Installation
 
@@ -55,7 +56,7 @@ The *shape* function allows to compute breaks according to several discretizatio
 
 #### shape
 
-The *shape* function allows to drw the shape of the data. This stage is important to choose the right discretization method. [Source](https://github.com/neocarto/statsbreaks/blob/main/src/shape.js)
+The *shape* function allows to draw the shape of the data. This step is important to choose the right discretization method. [Source](https://github.com/neocarto/statsbreaks/blob/main/src/shape.js)
 
 <details><summary>Code</summary>
 
@@ -76,7 +77,7 @@ The *shape* function allows to drw the shape of the data. This stage is importan
 
 #### view
 
-The *view* functionallows to visualize the result of a discretization. [Source](https://github.com/neocarto/statsbreaks/blob/main/src/view.js)
+The *view* function allows to visualize the result of a discretization. [Source](https://github.com/neocarto/statsbreaks/blob/main/src/view.js)
 
 <details><summary>Code</summary>
 
@@ -89,8 +90,8 @@ The *view* functionallows to visualize the result of a discretization. [Source](
 
 <details><summary>Parameters</summary>
 
-- <b>breaks</b>: an array n breaks
+- <b>breaks</b>: an array of n breaks
 - <b>colors</b>: an array of n-1 colors (optionnal)
-- <b>data</b> : input data set to display ticks (optionnal)
+- <b>data</b> : the input data set to display ticks (optionnal)
 -
 </details>
