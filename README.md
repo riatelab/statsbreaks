@@ -1,6 +1,7 @@
-# statsbreaks
 
-statsbreaks is javascript package to make data classification for choropleth maps.
+[![logo](img/statsbreaks.svg)](https://observablehq.com/@neocartocnrs/bertin-logo)
+
+`statsbreaks` is javascript package to make data classification for choropleth maps.
 
 ## 1. Installation
 
