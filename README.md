@@ -1,6 +1,11 @@
 
 [![logo](img/statsbreaks.svg)](https://observablehq.com/@neocartocnrs/bertin-logo)
 
+![npm](https://img.shields.io/npm/v/statsbreaks)
+![jsdeliver](https://img.shields.io/jsdelivr/npm/hw/statsbreaks)
+![license](https://img.shields.io/badge/license-MIT-success)
+![code size](https://img.shields.io/github/languages/code-size/neocarto/statsbreaks)
+
 `statsbreaks` is javascript package to make data classification for choropleth maps.
 
 ## 1. Installation
