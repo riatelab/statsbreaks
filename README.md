@@ -1,5 +1,5 @@
 
-[![logo](img/statsbreaks.svg)](https://observablehq.com/@neocartocnrs/bertin-logo)
+![logo](img/statsbreaks.svg)
 
 ![npm](https://img.shields.io/npm/v/statsbreaks)
 ![jsdeliver](https://img.shields.io/jsdelivr/npm/hw/statsbreaks)
