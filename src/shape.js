@@ -7,7 +7,7 @@ const d3 = Object.assign({}, d3array, d3selection, d3scale, d3shape);
 
 export function shape(data, precision = 25, marks = true, log = false) {
   data = data
-    .filter((d) => d != "")
+    .filter((d) => isFinite(d))
     .map((x) => +x)
     .sort(d3.ascending);
 
