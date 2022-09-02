@@ -1,6 +1,6 @@
 
 **statsbreaks** is a javascript package whose objective is to split (to classify/to discretize) a quantitative data set into a (k) number of classes or thematic categories.
-The general aim is to create a choropleth map, for example with **Bertin.js:choropleth**.
+The general aim is to create a choropleth map, for example with [bertin.js](https://observablehq.com/@neocartocnrs/bertin-js-chropoleth?collection=@neocartocnrs/bertin).
 
 ![logo](img/statsbreaks.svg)
 
@@ -25,7 +25,7 @@ Last version
 Pinned version
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/statsbreaks@0.1.3" charset="utf-8"></script>
+<script src="https://cdn.jsdelivr.net/npm/statsbreaks@0.3" charset="utf-8"></script>
 ```
 
 #### <ins>In Observable</ins>
@@ -39,7 +39,7 @@ stat = require("statsbreaks")
 Pinned version
 
 ~~~js
-stat = require("statsbreaks@0.1.3")
+stat = require("statsbreaks@0.3")
 ~~~
 
 #### breaks
