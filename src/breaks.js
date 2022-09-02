@@ -3,8 +3,9 @@ import {q6} from "./method-q6.js";
 import {quantile} from "./method-quantile.js";
 import {equal} from "./method-equal.js";
 import {jenks} from "./method-jenks.js";
+import {msd} from "./method-msd.js";
 
-export function breaks({ values, method, nb, precision }){
+export function breaks({ values, method, nb, precision, k, middle }){
   let breaks;
   switch (method) {
     case "q6":
@@ -19,7 +20,11 @@ export function breaks({ values, method, nb, precision }){
     case "jenks":
         breaks = jenks(values, nb);
         break;
+    case "msd":
+        breaks = msd(values, k, middle);
+        break;
   }
+
 
 if (Number.isInteger(+precision)){
 return breaks.map(d => rounding(d, precision))

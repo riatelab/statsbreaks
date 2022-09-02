@@ -1,7 +1,16 @@
-# statsbreaks
 
 **statsbreaks** is a javascript package whose objective is to split (to classify/to discretize) a quantitative data set into a (k) number of classes or thematic categories.
 The general aim is to create a choropleth map, for example with **Bertin.js:choropleth**.
+
+![logo](img/statsbreaks.svg)
+
+![npm](https://img.shields.io/npm/v/statsbreaks)
+![jsdeliver](https://img.shields.io/jsdelivr/npm/hw/statsbreaks)
+![license](https://img.shields.io/badge/license-MIT-success)
+![code size](https://img.shields.io/github/languages/code-size/neocarto/statsbreaks)
+
+`statsbreaks` is javascript package to make data classification for choropleth maps.
+
 
 ## 1. Installation
 

@@ -1,11 +1,15 @@
 {
   "name": "statsbreaks",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "A javascript package to group the values of a statistical series into classes",
   "main": "src/index.js",
   "module": "src/index.js",
   "jsdelivr": "dist/index.min.js",
   "unpkg": "dist/index.min.js",
+  "exports": {
+    "umd": "./dist/index.min.js",
+    "default": "./src/index.js"
+  },
   "files": [
     "src",
     "dist"
