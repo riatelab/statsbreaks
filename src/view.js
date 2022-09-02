@@ -27,7 +27,7 @@ export function view(breaks, cols = null, data = null) {
 
   if (data != null) {
     data = data
-      .filter((d) => d != "")
+      .filter((d) => isFinite(d))
       .map((x) => +x)
       .sort(d3.ascending);
     svg
