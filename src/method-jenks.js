@@ -1,3 +1,5 @@
+import { isNumber } from "./is-number";
+
 function breaks(data, lower_class_limits, n_classes) {
   const kclass = [];
   let m = data.length,
@@ -75,7 +77,7 @@ function getMatrices(data, n_classes) {
 }
 
 export function jenks(data, nb){
-  data = data.filter((d) => isFinite(d))
+  data = data.filter((d) => isNumber(d))
     .map((x) => +x)
     .sort(function (a, b) {
       return a - b;

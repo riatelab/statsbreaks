@@ -1,8 +1,9 @@
 import * as d3array from "d3-array";
+import { isNumber } from "./is-number";
 const d3 = Object.assign({}, d3array);
 
 export function q6(data){
-  data = data.filter((d) => isFinite(d)).map((x) => +x);
+  data = data.filter((d) => isNumber(d)).map((x) => +x);
   if (6 > data.length) return null;
   const breaks = [
     d3.quantile(data, 0),
