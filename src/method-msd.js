@@ -1,8 +1,9 @@
 import * as d3array from "d3-array";
+import { isNumber } from "./is-number";
 const d3 = Object.assign({}, d3array);
 
 export function msd(data, k = 1, middle = false) {
-  data = data.filter((d) => isFinite(d)).map((x) => +x);
+  data = data.filter((d) => isNumber(d)).map((x) => +x);
 
   const min = d3.min(data);
   const max = d3.max(data);

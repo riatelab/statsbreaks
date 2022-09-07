@@ -2,6 +2,7 @@ import * as d3array from "d3-array";
 import * as d3selection from "d3-selection";
 import * as d3scale from "d3-scale";
 import * as d3shape from "d3-shape";
+import { isNumber } from "./is-number";
 const d3 = Object.assign({}, d3array, d3selection, d3scale, d3shape);
 
 export function view(breaks, cols = null, data = null) {
@@ -27,7 +28,7 @@ export function view(breaks, cols = null, data = null) {
 
   if (data != null) {
     data = data
-      .filter((d) => isFinite(d))
+      .filter((d) => isNumber(d))
       .map((x) => +x)
       .sort(d3.ascending);
     svg

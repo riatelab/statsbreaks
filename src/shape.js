@@ -3,11 +3,12 @@ import * as d3selection from "d3-selection";
 import * as d3scale from "d3-scale";
 import * as d3shape from "d3-shape";
 import {equal} from "./method-equal.js";
+import { isNumber } from "./is-number";
 const d3 = Object.assign({}, d3array, d3selection, d3scale, d3shape);
 
 export function shape(data, precision = 25, marks = true, log = false) {
   data = data
-    .filter((d) => isFinite(d))
+    .filter((d) => isNumber(d))
     .map((x) => +x)
     .sort(d3.ascending);
 
