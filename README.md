@@ -48,18 +48,18 @@ The *shape* function allows to compute breaks according to several discretizatio
 
 <details><summary>Code</summary>
 
-  ~~~js
-  stat.breaks({ values: data, method: "jenks", nb: 5, precision: 0 })
-  ~~~
+~~~js
+stat.breaks({ values: data, method: "jenks", nb: 5, precision: 0 })
+~~~
 
 </details>
 
 <details><summary>Parameters</summary>
 
 - <b>values</b>: an array of quantitative values
-- <b>method</b>: method of discretization. "quantile", "q6", "equal", "jenks".
+- <b>method</b>: method of discretization. "quantile", "q6", "equal", "jenks" or "geometric".
 - <b>nb</b>: number of classes
-- <b>precision</b> : rounding. 2 transfom 35667.877876 to 35667.87 -2 transfom 35667.877876 to 35600.
+- <b>precision</b> : rounding. 2 transform 35667.877876 to 35667.87 -2 transform 35667.877876 to 35600.
 
 </details>
 
@@ -69,9 +69,9 @@ The *shape* function allows to draw the shape of the data. This step is importan
 
 <details><summary>Code</summary>
 
-  ~~~js
-  stat.shape(data, precision, marks, log)
-  ~~~
+~~~js
+stat.shape(data, precision, marks, log)
+~~~
 
 </details>
 
@@ -80,7 +80,7 @@ The *shape* function allows to draw the shape of the data. This step is importan
 - <b>data</b>: an array of quantitative values
 - <b>precision</b>: a number. Curve accuracy (default:25)
 - <b>marks</b>: a boolean (default true)
-- <b>log</b> : a boolen. transforms into a logarithm (default: false)
+- <b>log</b> : a boolean. transforms into a logarithm (default: false)
 
 </details>
 
@@ -90,17 +90,16 @@ The *view* function allows to visualize the result of a discretization. [Source]
 
 <details><summary>Code</summary>
 
-  ~~~js
-  stat.view(breaks, colors, data)
-)
-  ~~~
+~~~js
+stat.view(breaks, colors, data)
+~~~
 
 </details>
 
 <details><summary>Parameters</summary>
 
 - <b>breaks</b>: an array of n breaks
-- <b>colors</b>: an array of n-1 colors (optionnal)
-- <b>data</b> : the input data set to display ticks (optionnal)
+- <b>colors</b>: an array of n-1 colors (optional)
+- <b>data</b> : the input data set to display ticks (optional)
 -
 </details>
