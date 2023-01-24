@@ -23,14 +23,15 @@ export function breaks({ values, method, nb, precision, k, middle }){
     case "msd":
         breaks = msd(values, k, middle);
         break;
+    case "geometric":
+        breaks = geometricProgression(values, nb);
+        break;
   }
 
 
-if (Number.isInteger(+precision)){
-return breaks.map(d => rounding(d, precision))
-} else {
-return breaks
-}
-
-
+  if (Number.isInteger(+precision)){
+    return breaks.map(d => rounding(d, precision))
+  } else {
+    return breaks
+  }
 }
