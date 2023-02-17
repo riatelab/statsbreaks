@@ -25,7 +25,7 @@ Last version
 Pinned version
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/statsbreaks@0.4" charset="utf-8"></script>
+<script src="https://cdn.jsdelivr.net/npm/statsbreaks@0.5" charset="utf-8"></script>
 ```
 
 #### <ins>In Observable</ins>
@@ -39,7 +39,7 @@ stat = require("statsbreaks")
 Pinned version
 
 ~~~js
-stat = require("statsbreaks@0.4")
+stat = require("statsbreaks@0.5")
 ~~~
 
 #### breaks
