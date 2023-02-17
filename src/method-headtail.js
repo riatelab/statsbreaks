@@ -1,4 +1,4 @@
-import { extent } from "d3-array";
+import { extent, mean as d3mean } from "d3-array";
 import { isNumber } from "./is-number";
 
 /**
@@ -21,7 +21,7 @@ export function headtail(data, nb) {
      */
     function getBreak(data) {
       // Add mean to breaks value
-      const mean = d3.mean(data);
+      const mean = d3mean(data);
       breaks.push(mean);
   
       // Recursive call to get next break point
