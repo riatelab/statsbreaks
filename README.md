@@ -44,7 +44,7 @@ stat = require("statsbreaks@0.3")
 
 #### breaks
 
-The *shape* function allows to compute breaks according to several discretization methods. [Source](https://github.com/neocarto/statsbreaks/blob/main/src/breaks.js)
+The *breaks* function allows to compute breaks according to several discretization methods. [Source](https://github.com/neocarto/statsbreaks/blob/main/src/breaks.js)
 
 <details><summary>Code</summary>
 
@@ -57,7 +57,7 @@ stat.breaks({ values: data, method: "jenks", nb: 5, precision: 0 })
 <details><summary>Parameters</summary>
 
 - <b>values</b>: an array of quantitative values
-- <b>method</b>: method of discretization. "quantile", "q6", "equal", "jenks" or "geometric".
+- <b>method</b>: method of discretization. "quantile", "q6", "equal", "jenks", "geometric" or "headtail".
 - <b>nb</b>: number of classes
 - <b>precision</b> : rounding. 2 transform 35667.877876 to 35667.87 -2 transform 35667.877876 to 35600.
 

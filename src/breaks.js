@@ -5,6 +5,7 @@ import { equal } from "./method-equal.js";
 import { jenks } from "./method-jenks.js";
 import { msd } from "./method-msd.js";
 import { geometricProgression } from "./method-geometric-progression.js";
+import { headtail } from "./method-headtail.js";
 
 export function breaks({ values, method, nb, precision, k, middle }) {
   let breaks;
@@ -26,6 +27,9 @@ export function breaks({ values, method, nb, precision, k, middle }) {
       break;
     case "geometric":
       breaks = geometricProgression(values, nb);
+      break;
+    case "headtail":
+      breaks = headtail(values, nb);
       break;
   }
 
