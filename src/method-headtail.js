@@ -1,45 +1,72 @@
-import { extent, mean as d3mean } from "d3-array";
-import { isNumber } from "./is-number";
+import { isNumber } from "./helpers/is-number";
+import { roundarray } from "./helpers/rounding";
+import { min } from "./helpers/min";
+import { max } from "./helpers/max";
+import { mean } from "./helpers/mean";
 
 /**
  * Head/tail algorithm v1.0 based on Jiang (2019).
- * @param {Number[]} data - An array of numerical values.
- * @param {Number} nb - Optional number of class. If nb < natural breaks results, upper classes are merged. If nb > natural breaks results, nb is not used and the natural breaks results is returned.
- * @returns {Number[]} An array of break points with min and max.
+ *
+ * Example: {@link https://observablehq.com/@neocartocnrs/hello-statsbreaks Observable notebook}
+ *
+ * @param {number[]} data - An array of numerical values.
+ * @param {object} options - Optional parameters
+ * @param {number} [options.nb = 5] - Number of classes desired
+ * @param {number} [options.round = 2] - Number of digits
+ * @param {boolean} [options.minmax = true] - To keep or delete min and max
+ * @returns {number[]} - An array of breaks.
+ *
  */
-export function headtail(data, nb) {
-    data = data.filter((d) => isNumber(d)).map((x) => +x);
 
-    const [min, max] = extent(data);
-  
-    // Initiate breaks with min value
-    const breaks = [min];
-  
-    /**
-     * A recursive function that calculates the next break point.
-     * @param {Number[]} data - An array of numerical values.
-     */
-    function getBreak(data) {
-      // Add mean to breaks value
-      const mean = d3mean(data);
-      breaks.push(mean);
-  
-      // Recursive call to get next break point
-      const head = data.filter((d) => d > mean);
-      while (head.length > 1 && head.length / data.length <= 0.4)
-        return getBreak(head);
-    }
-  
-    getBreak(data);
-  
-    // Handle optional number of class
-    if (nb && nb !== null) {
-      const diff = nb - breaks.length;
-      if (diff < 0) breaks.splice(nb);
-    }
-  
-    // Add max to breaks
-    breaks.push(max);
+export function headtail(data, options = {}) {
+  data = data.filter((d) => isNumber(d)).map((x) => +x);
+  let nb = isNumber(options.nb) ? options.nb : 5;
+  let round = isNumber(options.round) ? options.round : 2;
+  let minmax =
+    options.minmax === true || options.minmax == undefined ? true : false;
 
-    return breaks;
+  // Initiate breaks with min value
+  let breaks = [min(data)];
+
+  /**
+   * A recursive function that calculates the next break point.
+   * @param {Number[]} data - An array of numerical values.
+   */
+  function getBreak(data) {
+    // Add mean to breaks value
+    const avg = mean(data);
+    breaks.push(avg);
+
+    // Recursive call to get next break point
+    const head = data.filter((d) => d > avg);
+    while (head.length > 1 && head.length / data.length <= 0.4)
+      return getBreak(head);
+  }
+
+  getBreak(data);
+
+  // Handle optional number of class
+  if (nb && nb !== null) {
+    const diff = nb - breaks.length;
+    if (diff < 0) breaks.splice(nb);
+  }
+
+  // Add max to breaks
+  breaks.push(max(data));
+
+  // Output
+  if (Number.isInteger(round)) {
+    breaks = roundarray(breaks, round);
+  }
+  if (!minmax) {
+    breaks = breaks.slice(1, -1);
+  }
+
+  if (Number.isInteger(round)) {
+    breaks = roundarray(breaks, round);
+  }
+  if (!minmax) {
+    breaks = breaks.slice(1, -1);
+  }
+  return breaks;
 }

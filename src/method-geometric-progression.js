@@ -1,29 +1,58 @@
-import { min as d3min, max as d3max } from "d3-array";
-import { isNumber } from "./is-number";
+import { isNumber } from "./helpers/is-number";
+import { min } from "./helpers/min";
+import { max } from "./helpers/max";
+import { roundarray } from "./helpers/rounding";
 
-export function geometricProgression(data, nb) {
-    data = data.filter((d) => isNumber(d)).map((x) => +x);
-    // With geometric progression, the series of values
-    // should not contain negative or zero values.
-    if (data.some((d) => d <= 0)) return null;
+/**
+ * Geometric progression
+ *
+ * Example: {@link https://observablehq.com/@neocartocnrs/hello-statsbreaks Observable notebook}
+ *
+ * @param {number[]} data - An array of numerical values.
+ * @param {object} options - Optional parameters
+ * @param {number} [options.nb = 5] - Number of classes desired
+ * @param {number} [options.round = 2] - Number of digits
+ * @param {boolean} [options.minmax = true] - To keep or delete min and max
+ * @returns {number[]} - An array of breaks.
+ *
+ */
 
-    const breaks = new Array(nb + 1);
-    const min = d3min(data);
-    const max = d3max(data);
-    const logMax = Math.log(max) / Math.LN10;
-    const logMin = Math.log(min) / Math.LN10;
-    const logDiff = (logMax - logMin) / nb;
+export function geometricProgression(data, options = {}) {
+  data = data.filter((d) => isNumber(d)).map((x) => +x);
+  let nb = isNumber(options.nb) ? options.nb : 5;
+  let round = isNumber(options.round) ? options.round : 2;
+  let minmax =
+    options.minmax === true || options.minmax == undefined ? true : false;
 
-    // The first value is the minimum value.
-    breaks[0] = min;
+  // With geometric progression, the series of values
+  // should not contain negative or zero values.
+  if (data.some((d) => d <= 0)) return null;
 
-    // Compute the antilogarithm of each log boundary.
-    for (let i = 1; i < nb; i++) {
-        breaks[i] = Math.pow(10, logMin + i * logDiff);
-    }
+  let breaks = new Array(nb + 1);
+  const mn = min(data);
+  const mx = max(data);
+  const logMax = Math.log(mx) / Math.LN10;
+  const logMin = Math.log(mn) / Math.LN10;
+  const logDiff = (logMax - logMin) / nb;
 
-    // The last value is the maximum value.
-    breaks[nb] = max;
+  // The first value is the minimum value.
+  breaks[0] = mn;
 
-    return breaks;
+  // Compute the antilogarithm of each log boundary.
+  for (let i = 1; i < nb; i++) {
+    breaks[i] = Math.pow(10, logMin + i * logDiff);
+  }
+
+  // The last value is the maximum value.
+  breaks[nb] = mx;
+
+  // Output
+  breaks = breaks.sort((a, b) => a - b);
+  if (Number.isInteger(round)) {
+    breaks = roundarray(breaks, round);
+  }
+  if (!minmax) {
+    breaks = breaks.slice(1, -1);
+  }
+  return breaks;
 }

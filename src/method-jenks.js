@@ -1,4 +1,19 @@
-import { isNumber } from "./is-number";
+import { isNumber } from "./helpers/is-number";
+import { roundarray } from "./helpers/rounding";
+
+/**
+ * Jenks algorithm
+ *
+ * Example: {@link https://observablehq.com/@neocartocnrs/hello-statsbreaks Observable notebook}
+ *
+ * @param {number[]} data - An array of numerical values.
+ * @param {object} options - Optional parameters
+ * @param {number} [options.nb = 5] - Number of classes desired
+ * @param {number} [options.round = 2] - Number of digits
+ * @param {boolean} [options.minmax = true] - To keep or delete min and max
+ * @returns {number[]} - An array of breaks.
+ *
+ */
 
 function breaks(data, lower_class_limits, n_classes) {
   const kclass = [];
@@ -19,7 +34,18 @@ function getMatrices(data, n_classes) {
   const lower_class_limits = [],
     variance_combinations = [],
     length_data = data.length;
-  let i, j, m, l, variance, val, sum, sum_squares, w, temp_val, i4, lower_class_limit;
+  let i,
+    j,
+    m,
+    l,
+    variance,
+    val,
+    sum,
+    sum_squares,
+    w,
+    temp_val,
+    i4,
+    lower_class_limit;
 
   // In original fortran code, matrices are of size (length_data x n_classes),
   // not ((length_data + 1) x (n_classes + 1)), even if most ports are doing this.
@@ -55,7 +81,7 @@ function getMatrices(data, n_classes) {
 
       if (i4 > -1) {
         for (j = 1; j < n_classes; j++) {
-          temp_val = (variance + variance_combinations[i4][j - 1]);
+          temp_val = variance + variance_combinations[i4][j - 1];
           if (variance_combinations[l][j] >= temp_val) {
             // We still add 1 here (to compare the returned matrices to the original fortran matrices
             // and to the result that most lib are producing - we are ofc removing this "1" value
@@ -76,16 +102,31 @@ function getMatrices(data, n_classes) {
   };
 }
 
-export function jenks(data, nb){
-  data = data.filter((d) => isNumber(d))
+export function jenks(data, options = {}) {
+  data = data
+    .filter((d) => isNumber(d))
     .map((x) => +x)
     .sort(function (a, b) {
       return a - b;
     });
+
+  let nb = isNumber(options.nb) ? options.nb : 5;
+  let round = isNumber(options.round) ? options.round : 2;
+  let minmax =
+    options.minmax === true || options.minmax == undefined ? true : false;
+
   if (nb > data.length) return null;
   const unique = [...new Set(data)];
   if (nb > unique.length) return null;
   let matrices = getMatrices(data, nb);
   let lower_class_limits = matrices.lower_class_limits;
-  return breaks(data, lower_class_limits, nb);
+  let result = breaks(data, lower_class_limits, nb);
+
+  if (Number.isInteger(round)) {
+    result = roundarray(result, round);
+  }
+  if (!minmax) {
+    result = result.slice(1, -1);
+  }
+  return result;
 }

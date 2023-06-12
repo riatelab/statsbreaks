@@ -1,4 +1,3 @@
-import { rounding } from "./rounding.js";
 import { q6 } from "./method-q6.js";
 import { quantile } from "./method-quantile.js";
 import { equal } from "./method-equal.js";
@@ -7,35 +6,49 @@ import { msd } from "./method-msd.js";
 import { geometricProgression } from "./method-geometric-progression.js";
 import { headtail } from "./method-headtail.js";
 
-export function breaks({ values, method, nb, precision, k, middle }) {
+/**
+ * Discretization methods
+ *
+ * Example: {@link https://observablehq.com/@neocartocnrs/hello-statsbreaks Observable notebook}
+ *
+ * @param {number[]} data - An array of numerical values.
+ * @param {string} [method=quantile] - Classification method (quantile, q6, equal, jenks, msd, geometric, headtail)
+ * @param {object} options - Optional parameters
+ * @param {number} [options.nb = 5] - Number of classes desired
+ * @param {number} [options.round = 2] - Number of digits
+ * @param {boolean} [options.minmax = true] - To keep or delete min and max
+ * @param {number} [options.k = 1] - Number of standard deviations taken into account (msd method only)
+ * @param {boolean} [options.middle = true] - To have the average as a class center (msd method only)
+ * @returns {number[]} - An array of breaks.
+ *
+ */
+
+export function breaks(data, options = {}) {
+  let method = options.method ? options.method : "quantile";
   let breaks;
   switch (method) {
     case "q6":
-      breaks = q6(values);
+      breaks = q6(data, options);
       break;
     case "quantile":
-      breaks = quantile(values, nb);
+      breaks = quantile(data, options);
       break;
     case "equal":
-      breaks = equal(values, nb);
+      breaks = equal(data, options);
       break;
     case "jenks":
-      breaks = jenks(values, nb);
+      breaks = jenks(data, options);
       break;
     case "msd":
-      breaks = msd(values, k, middle);
+      breaks = msd(data, options);
       break;
     case "geometric":
-      breaks = geometricProgression(values, nb);
+      breaks = geometricProgression(data, options);
       break;
     case "headtail":
-      breaks = headtail(values, nb);
+      breaks = headtail(data, options);
       break;
   }
 
-  if (Number.isInteger(+precision)) {
-    return breaks.map((d) => rounding(d, precision));
-  } else {
-    return breaks;
-  }
+  return breaks;
 }

@@ -1,32 +1,56 @@
-import * as d3array from "d3-array";
-import { isNumber } from "./is-number";
-const d3 = Object.assign({}, d3array);
+import { isNumber } from "./helpers/is-number";
+import { roundarray } from "./helpers/rounding";
+import { min } from "./helpers/min";
+import { max } from "./helpers/max";
+import { mean } from "./helpers/mean";
+import { deviation } from "./helpers/deviation";
 
-export function msd(data, k = 1, middle = false) {
+/**
+ * Classification based on mean and standard deviation
+ *
+ * Example: {@link https://observablehq.com/@neocartocnrs/hello-statsbreaks Observable notebook}
+ *
+ * @param {number[]} data - An array of numerical values.
+ * @param {object} options - Optional parameters
+ * @param {number} [options.k = 1] - Number of standard deviations taken into account
+ * @param {number} [options.round = 2] - Number of digits
+ * @param {boolean} [options.middle = true] - To have the average as a class center
+ * @param {boolean} [options.minmax = true] - To keep or delete min and max
+ * @returns {number[]} - An array of breaks.
+ *
+ */
+
+export function msd(data, options = {}) {
   data = data.filter((d) => isNumber(d)).map((x) => +x);
+  let k = isNumber(options.k) ? options.k : 1;
+  let middle =
+    options.middle === false || options.middle == undefined ? false : true;
+  let round = isNumber(options.round) ? options.round : 2;
+  let minmax =
+    options.minmax === true || options.minmax == undefined ? true : false;
 
-  const min = d3.min(data);
-  const max = d3.max(data);
-  const avg = d3.mean(data);
-  const sd = d3.deviation(data);
+  const mn = min(data);
+  const mx = max(data);
+  const avg = mean(data);
+  const sd = deviation(data);
 
-  const breaks = [min, max];
+  let breaks = [mn, mx];
 
   if (middle == true) {
     let i = avg + (k / 2) * sd;
-    while (i < max) {
+    while (i < mx) {
       breaks.push(i);
       i = i + sd * k;
     }
     i = avg - (k / 2) * sd;
-    while (i > min) {
+    while (i > mn) {
       breaks.push(i);
       i = i - sd * k;
     }
   } else {
     breaks.push(avg);
     let i = avg + sd * k;
-    while (i < max) {
+    while (i < mx) {
       breaks.push(i);
       i = i + sd * k;
     }
@@ -37,5 +61,12 @@ export function msd(data, k = 1, middle = false) {
     }
   }
 
-    return breaks.sort(d3.ascending);
+  breaks = breaks.sort((a, b) => a - b);
+  if (Number.isInteger(round)) {
+    breaks = roundarray(breaks, round);
   }
+  if (!minmax) {
+    breaks = breaks.slice(1, -1);
+  }
+  return breaks;
+}
