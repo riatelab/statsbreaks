@@ -15,6 +15,7 @@ import { ValuesInferiorOrEqualToZeroError } from './errors';
  * @param {number} [options.round = 2] - Number of digits
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
+ * @throws {ValuesInferiorOrEqualToZeroError} - If input array contains negative or zero values.
  *
  */
 
