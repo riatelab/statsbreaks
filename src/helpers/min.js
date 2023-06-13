@@ -7,5 +7,12 @@ import { isNumber } from "./is-number.js";
  */
 
 export function min(x) {
-  return Math.min(...x.filter((d) => isNumber(d)).map((a) => +a));
+  let minimum = Infinity;
+  for (let i = 0, length = x.length; i < length; i++) {
+    if (isNumber(x[i]) && x[i] < minimum) {
+      minimum = x[i];
+    }
+  }
+
+  return minimum;
 }
