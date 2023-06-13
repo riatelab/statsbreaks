@@ -2,6 +2,7 @@ import { isNumber } from "./helpers/is-number";
 import { roundarray } from "./helpers/rounding";
 import { min } from "./helpers/min";
 import { max } from "./helpers/max";
+import { TooFewValuesError } from "./errors";
 
 /**
  * Equal method
@@ -23,7 +24,7 @@ export function equal(data, options = {}) {
   let round = isNumber(options.round) ? options.round : 2;
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
-  if (nb > data.length) return null;
+  if (nb > data.length) throw new TooFewValuesError();
   let breaks = [min(data), max(data)];
   const r = (breaks[1] - breaks[0]) / nb; // raison
   let tmp = breaks[0];

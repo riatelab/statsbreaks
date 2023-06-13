@@ -1,6 +1,7 @@
 import { isNumber } from "./helpers/is-number";
 import { roundarray } from "./helpers/rounding";
 import { quantil } from "./helpers/quantile";
+import { TooFewValuesError } from './errors';
 
 /**
  * Q6 method
@@ -20,7 +21,7 @@ export function q6(data, options = {}) {
   let round = isNumber(options.round) ? options.round : 2;
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
-  if (6 > data.length) return null;
+  if (6 > data.length) throw new TooFewValuesError();
   let breaks = [
     quantil(data, 0),
     quantil(data, 0.05),
