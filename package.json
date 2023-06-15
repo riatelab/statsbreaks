@@ -30,12 +30,7 @@
     "url": "https://github.com/neocarto/statsbreaks/issues"
   },
   "homepage": "https://github.com/neocarto/statsbreaks#readme",
-  "dependencies": {
-    "d3-array": "^3.1.1",
-    "d3-scale": "^4.0.2",
-    "d3-selection": "^3.0.0",
-    "d3-shape": "^3.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/preset-env": "^7.16.11",
     "@rollup/plugin-babel": "^5.3.0",
