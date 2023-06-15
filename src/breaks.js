@@ -12,8 +12,8 @@ import { headtail } from "./method-headtail.js";
  * Example: {@link https://observablehq.com/@neocartocnrs/hello-statsbreaks Observable notebook}
  *
  * @param {number[]} data - An array of numerical values.
- * @param {string} [method=quantile] - Classification method (quantile, q6, equal, jenks, msd, geometric, headtail)
  * @param {object} options - Optional parameters
+ * @param {string} [options.method=quantile] - Classification method (quantile, q6, equal, jenks, msd, geometric, headtail)
  * @param {number} [options.nb = 5] - Number of classes desired
  * @param {number} [options.round = 2] - Number of digits
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
