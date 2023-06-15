@@ -2,6 +2,7 @@ import { isNumber } from "./helpers/is-number";
 import { min } from "./helpers/min";
 import { max } from "./helpers/max";
 import { roundarray } from "./helpers/rounding";
+import { ValuesInferiorOrEqualToZeroError } from './errors';
 
 /**
  * Geometric progression
@@ -14,6 +15,7 @@ import { roundarray } from "./helpers/rounding";
  * @param {number} [options.round = 2] - Number of digits
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
+ * @throws {ValuesInferiorOrEqualToZeroError} - If input array contains negative or zero values.
  *
  */
 
@@ -26,7 +28,7 @@ export function geometricProgression(data, options = {}) {
 
   // With geometric progression, the series of values
   // should not contain negative or zero values.
-  if (data.some((d) => d <= 0)) return null;
+  if (data.some((d) => d <= 0)) throw new ValuesInferiorOrEqualToZeroError();
 
   let breaks = new Array(nb + 1);
   const mn = min(data);

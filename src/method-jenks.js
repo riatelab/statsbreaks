@@ -1,5 +1,6 @@
 import { isNumber } from "./helpers/is-number";
 import { roundarray } from "./helpers/rounding";
+import { TooFewValuesError } from './errors';
 
 /**
  * Jenks algorithm
@@ -12,6 +13,7 @@ import { roundarray } from "./helpers/rounding";
  * @param {number} [options.round = 2] - Number of digits
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
+ * @throws {TooFewValuesError} - If the number of (unique) values is less than the number of classes.
  *
  */
 
@@ -115,9 +117,9 @@ export function jenks(data, options = {}) {
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
 
-  if (nb > data.length) return null;
+  if (nb > data.length) throw new TooFewValuesError();
   const unique = [...new Set(data)];
-  if (nb > unique.length) return null;
+  if (nb > unique.length) throw new TooFewValuesError('Too few unique values for the given number of breaks');
   let matrices = getMatrices(data, nb);
   let lower_class_limits = matrices.lower_class_limits;
   let result = breaks(data, lower_class_limits, nb);

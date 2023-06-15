@@ -17,6 +17,7 @@ import { deviation } from "./helpers/deviation";
  * @param {boolean} [options.middle = true] - To have the average as a class center
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
+ * @throws {TooFewValuesError} - If the number of values is less than 6.
  *
  */
 

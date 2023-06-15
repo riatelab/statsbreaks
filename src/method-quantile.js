@@ -1,6 +1,7 @@
 import { isNumber } from "./helpers/is-number";
 import { roundarray } from "./helpers/rounding";
 import { quantil } from "./helpers/quantile";
+import { TooFewValuesError } from "./errors";
 
 /**
  * Classification by quantiles
@@ -13,6 +14,8 @@ import { quantil } from "./helpers/quantile";
  * @param {number} [options.round = 2] - Number of digits
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
+ * @throws {TooFewValuesError} - If the number of values is less than the number of classes.
+ *
  *
  */
 
@@ -23,7 +26,7 @@ export function quantile(data, options = {}) {
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
 
-  if (nb > data.length) return null;
+  if (nb > data.length) throw new TooFewValuesError();
   let breaks = [];
   const q = 1 / nb;
   for (let i = 0; i <= nb; i++) {
