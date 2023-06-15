@@ -5,6 +5,7 @@ import { jenks } from "./method-jenks.js";
 import { msd } from "./method-msd.js";
 import { geometricProgression } from "./method-geometric-progression.js";
 import { headtail } from "./method-headtail.js";
+import { UnknownMethodError } from "./errors.js";
 
 /**
  * Discretization methods
@@ -20,6 +21,7 @@ import { headtail } from "./method-headtail.js";
  * @param {number} [options.k = 1] - Number of standard deviations taken into account (msd method only)
  * @param {boolean} [options.middle = true] - To have the average as a class center (msd method only)
  * @returns {number[]} - An array of breaks.
+ * @throws {UnknownMethodError} - If the classification method is unknown.
  *
  */
 
@@ -48,6 +50,8 @@ export function breaks(data, options = {}) {
     case "headtail":
       breaks = headtail(data, options);
       break;
+    default:
+      throw new UnknownMethodError();
   }
 
   return breaks;

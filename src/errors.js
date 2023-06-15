@@ -18,7 +18,18 @@ class TooFewValuesError extends Error {
   }
 }
 
+/**
+ * Unknown method error (when the classification method is not recognized).
+ */
+class UnknownMethodError extends Error {
+  constructor() {
+    super("Unknown classification method");
+    this.name = 'UnknownMethodError';
+  }
+}
+
 export {
   ValuesInferiorOrEqualToZeroError,
   TooFewValuesError,
+  UnknownMethodError,
 };
