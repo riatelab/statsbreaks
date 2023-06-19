@@ -5,6 +5,7 @@ import { jenks } from "./method-jenks.js";
 import { msd } from "./method-msd.js";
 import { geometricProgression } from "./method-geometric-progression.js";
 import { headtail } from "./method-headtail.js";
+import { pretty } from './method-pretty';
 import { UnknownMethodError } from "./errors.js";
 
 /**
@@ -49,6 +50,9 @@ export function breaks(data, options = {}) {
       break;
     case "headtail":
       breaks = headtail(data, options);
+      break;
+    case "pretty":
+      breaks = pretty(data, options);
       break;
     default:
       throw new UnknownMethodError();
