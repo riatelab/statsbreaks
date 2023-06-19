@@ -34,7 +34,8 @@ function prettyNumber(x, rounded = true) {
 }
 
 /**
- * Pretty breaks method.
+ * Pretty breaks method (generate breaks that are equally spaced round values which cover the range of values
+ * in the input array - the breaks are chosen so that they are 1, 2, or 5 times a power of 10).
  * Note that this method can return fewer classes than requested.
  *
  * @param {number[]} data - An array of numerical values.
