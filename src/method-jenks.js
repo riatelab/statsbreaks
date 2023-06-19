@@ -2,21 +2,6 @@ import { isNumber } from "./helpers/is-number";
 import { roundarray } from "./helpers/rounding";
 import { TooFewValuesError } from './errors';
 
-/**
- * Jenks algorithm
- *
- * Example: {@link https://observablehq.com/@neocartocnrs/hello-statsbreaks Observable notebook}
- *
- * @param {number[]} data - An array of numerical values.
- * @param {object} options - Optional parameters
- * @param {number} [options.nb = 5] - Number of classes desired
- * @param {number} [options.round = 2] - Number of digits
- * @param {boolean} [options.minmax = true] - To keep or delete min and max
- * @returns {number[]} - An array of breaks.
- * @throws {TooFewValuesError} - If the number of (unique) values is less than the number of classes.
- *
- */
-
 function breaks(data, lower_class_limits, n_classes) {
   const kclass = [];
   let m = data.length,
@@ -104,6 +89,20 @@ function getMatrices(data, n_classes) {
   };
 }
 
+/**
+ * Jenks algorithm
+ *
+ * Example: {@link https://observablehq.com/@neocartocnrs/hello-statsbreaks Observable notebook}
+ *
+ * @param {number[]} data - An array of numerical values.
+ * @param {object} options - Optional parameters
+ * @param {number} [options.nb = 5] - Number of classes desired
+ * @param {number} [options.round = 2] - Number of digits
+ * @param {boolean} [options.minmax = true] - To keep or delete min and max
+ * @returns {number[]} - An array of breaks.
+ * @throws {TooFewValuesError} - If the number of (unique) values is less than the number of classes.
+ *
+ */
 export function jenks(data, options = {}) {
   data = data
     .filter((d) => isNumber(d))
