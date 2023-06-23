@@ -11,6 +11,7 @@ import { msd } from './method-msd';
 import { geometricProgression } from './method-geometric-progression';
 import { headtail } from './method-headtail';
 import { isNumber } from './helpers/is-number';
+import { pretty } from './method-pretty';
 
 class AbstractClassifier {
   constructor(values, precision) {
@@ -429,6 +430,34 @@ class HeadTailClassifier extends AbstractClassifier {
   }
 }
 
+/**
+ * Class representing a classifier using "pretty breaks" classification method.
+ * @extends AbstractClassifier
+ */
+class PrettyBreaksClassifier extends AbstractClassifier {
+  /**
+   * Create a classifier using "pretty breaks" classification method.
+   *
+   * @param {number[]} values
+   * @param precision
+   */
+  constructor(values, precision) {
+    super(values, precision);
+    this.type = 'pretty';
+  }
+
+  /**
+   * Classify the series into the given number of classes.
+   *
+   * @param {number} nClasses - The number of classes to classify the series into.
+   * @returns {number[]}
+   */
+  classify(nClasses) {
+    this.breaks = pretty(this._values, { nb: nClasses, precision: this.precision });
+    return this._breaks;
+  }
+}
+
 export {
   CustomBreaksClassifier,
   EqualClassifier,
@@ -436,6 +465,7 @@ export {
   HeadTailClassifier,
   JenksClassifier,
   MsdClassifier,
+  PrettyBreaksClassifier,
   QuantileClassifier,
-  Q6Classifier
+  Q6Classifier,
 };
