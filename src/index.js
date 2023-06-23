@@ -14,6 +14,7 @@ export {
   HeadTailClassifier,
   JenksClassifier,
   MsdClassifier,
+  PrettyBreaksClassifier,
   QuantileClassifier,
-  Q6Classifier
+  Q6Classifier,
 } from "./classifier";
