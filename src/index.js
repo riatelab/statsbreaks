@@ -6,6 +6,7 @@ export { jenks } from "./method-jenks.js";
 export { headtail } from "./method-headtail.js";
 export { msd } from "./method-msd.js";
 export { geometricProgression } from "./method-geometric-progression";
+export { pretty } from "./method-pretty";
 export {
   CustomBreaksClassifier,
   EqualClassifier,
