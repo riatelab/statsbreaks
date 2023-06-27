@@ -97,7 +97,7 @@ function getMatrices(data, n_classes) {
  * @param {number[]} data - An array of numerical values.
  * @param {object} options - Optional parameters
  * @param {number} [options.nb = 5] - Number of classes desired
- * @param {number} [options.round = 2] - Number of digits
+ * @param {number} [options.precision = 2] - Number of digits
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
  * @throws {TooFewValuesError} - If the number of (unique) values is less than the number of classes.
@@ -112,7 +112,7 @@ export function jenks(data, options = {}) {
     });
 
   let nb = isNumber(options.nb) ? options.nb : 5;
-  let round = isNumber(options.round) ? options.round : 2;
+  let precision = isNumber(options.precision) ? options.precision : 2;
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
 
@@ -123,8 +123,8 @@ export function jenks(data, options = {}) {
   let lower_class_limits = matrices.lower_class_limits;
   let result = breaks(data, lower_class_limits, nb);
 
-  if (Number.isInteger(round)) {
-    result = roundarray(result, round);
+  if (Number.isInteger(precision)) {
+    result = roundarray(result, precision);
   }
   if (!minmax) {
     result = result.slice(1, -1);

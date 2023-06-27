@@ -13,7 +13,7 @@ import { deviation } from "./helpers/deviation";
  * @param {number[]} data - An array of numerical values.
  * @param {object} options - Optional parameters
  * @param {number} [options.k = 1] - Number of standard deviations taken into account
- * @param {number} [options.round = 2] - Number of digits
+ * @param {number} [options.precision = 2] - Number of digits
  * @param {boolean} [options.middle = true] - To have the average as a class center
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
@@ -26,7 +26,7 @@ export function msd(data, options = {}) {
   let k = isNumber(options.k) ? options.k : 1;
   let middle =
     options.middle === false || options.middle == undefined ? false : true;
-  let round = isNumber(options.round) ? options.round : 2;
+  let precision = isNumber(options.precision) ? options.precision : 2;
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
 
@@ -63,8 +63,8 @@ export function msd(data, options = {}) {
   }
 
   breaks = breaks.sort((a, b) => a - b);
-  if (Number.isInteger(round)) {
-    breaks = roundarray(breaks, round);
+  if (Number.isInteger(precision)) {
+    breaks = roundarray(breaks, precision);
   }
   if (!minmax) {
     breaks = breaks.slice(1, -1);

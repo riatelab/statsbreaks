@@ -1,22 +1,24 @@
-import { min } from './helpers/min';
-import { max } from './helpers/max';
-import { mean } from './helpers/mean';
-import { median } from './helpers/median';
-import { deviation } from './helpers/deviation';
-import { quantile } from './method-quantile';
-import { jenks } from './method-jenks';
-import { equal } from './method-equal';
-import { q6 } from './method-q6';
-import { msd } from './method-msd';
-import { geometricProgression } from './method-geometric-progression';
-import { headtail } from './method-headtail';
-import { isNumber } from './helpers/is-number';
-import { pretty } from './method-pretty';
+import { min } from "./helpers/min";
+import { max } from "./helpers/max";
+import { mean } from "./helpers/mean";
+import { median } from "./helpers/median";
+import { deviation } from "./helpers/deviation";
+import { quantile } from "./method-quantile";
+import { jenks } from "./method-jenks";
+import { equal } from "./method-equal";
+import { q6 } from "./method-q6";
+import { msd } from "./method-msd";
+import { geometricProgression } from "./method-geometric-progression";
+import { headtail } from "./method-headtail";
+import { isNumber } from "./helpers/is-number";
+import { pretty } from "./method-pretty";
 
 class AbstractClassifier {
   constructor(values, precision) {
     if (this.constructor === AbstractClassifier) {
-      throw new TypeError('Abstract class "AbstractClassifier" cannot be instantiated directly.');
+      throw new TypeError(
+        'Abstract class "AbstractClassifier" cannot be instantiated directly.'
+      );
     }
     this._values = values;
     this.precision = precision == null || !isNumber(precision) ? 2 : precision;
@@ -157,7 +159,9 @@ class AbstractClassifier {
    */
   countByClass() {
     if (this._breaks === null) {
-      throw new Error('Breaks are not set, please call the "classify" method first');
+      throw new Error(
+        'Breaks are not set, please call the "classify" method first'
+      );
     }
     if (this._counts === null) {
       const counts = new Array(this.nClasses).fill(0);
@@ -178,7 +182,9 @@ class AbstractClassifier {
    */
   getClass(value) {
     if (this._breaks === null) {
-      throw new Error('Breaks are not set, please call the "classify" method first');
+      throw new Error(
+        'Breaks are not set, please call the "classify" method first'
+      );
     }
     for (let i = 0, breaksLength = this._breaks.length; i < breaksLength; i++) {
       if (value <= this._breaks[i + 1]) {
@@ -212,7 +218,7 @@ class JenksClassifier extends AbstractClassifier {
    */
   constructor(values, precision) {
     super(values, precision);
-    this.type = 'jenks';
+    this.type = "jenks";
   }
 
   /**
@@ -223,7 +229,10 @@ class JenksClassifier extends AbstractClassifier {
    * @throws {TooFewValuesError}
    */
   classify(nClasses) {
-    this.breaks = jenks(this._values, { nb: nClasses, precision: this.precision });
+    this.breaks = jenks(this._values, {
+      nb: nClasses,
+      precision: this.precision,
+    });
     return this._breaks;
   }
 }
@@ -241,7 +250,7 @@ class QuantileClassifier extends AbstractClassifier {
    */
   constructor(values, precision) {
     super(values, precision);
-    this.type = 'jenks';
+    this.type = "jenks";
   }
 
   /**
@@ -252,7 +261,10 @@ class QuantileClassifier extends AbstractClassifier {
    * @throws {TooFewValuesError}
    */
   classify(nClasses) {
-    this.breaks = quantile(this._values, { nb: nClasses, precision: this.precision });
+    this.breaks = quantile(this._values, {
+      nb: nClasses,
+      precision: this.precision,
+    });
     return this._breaks;
   }
 }
@@ -270,7 +282,7 @@ class EqualClassifier extends AbstractClassifier {
    */
   constructor(values, precision) {
     super(values, precision);
-    this.type = 'equal';
+    this.type = "equal";
   }
 
   /**
@@ -281,7 +293,10 @@ class EqualClassifier extends AbstractClassifier {
    * @throws {TooFewValuesError}
    */
   classify(nClasses) {
-    this.breaks = equal(this._values, { nb: nClasses, precision: this.precision });
+    this.breaks = equal(this._values, {
+      nb: nClasses,
+      precision: this.precision,
+    });
     return this._breaks;
   }
 }
@@ -301,7 +316,7 @@ class GeometricProgressionClassifier extends AbstractClassifier {
    */
   constructor(values, precision) {
     super(values, precision);
-    this.type = 'geometric';
+    this.type = "geometric";
   }
 
   /**
@@ -311,7 +326,10 @@ class GeometricProgressionClassifier extends AbstractClassifier {
    * @returns {number[]}
    */
   classify(nClasses) {
-    this.breaks = geometricProgression(this._values, { nb: nClasses, precision: this.precision });
+    this.breaks = geometricProgression(this._values, {
+      nb: nClasses,
+      precision: this.precision,
+    });
     return this._breaks;
   }
 }
@@ -329,7 +347,7 @@ class Q6Classifier extends AbstractClassifier {
    */
   constructor(values, precision) {
     super(values, precision);
-    this.type = 'q6';
+    this.type = "q6";
   }
 
   /**
@@ -357,7 +375,7 @@ class CustomBreaksClassifier extends AbstractClassifier {
    */
   constructor(values, precision, breaks) {
     super(values, precision);
-    this.type = 'custom';
+    this.type = "custom";
     this.breaks = breaks;
   }
 
@@ -386,7 +404,7 @@ class MsdClassifier extends AbstractClassifier {
    */
   constructor(values, precision) {
     super(values, precision);
-    this.type = 'msd';
+    this.type = "msd";
   }
 
   /**
@@ -396,8 +414,11 @@ class MsdClassifier extends AbstractClassifier {
    * @param {boolean} middle - Whether to use the average of the series as a class center.
    * @returns {number[]}
    */
-  classify(k= 1, middle = true) {
-    this.breaks = msd(this._values, { precision: this.precision, middle: middle });
+  classify(k = 1, middle = true) {
+    this.breaks = msd(this._values, {
+      precision: this.precision,
+      middle: middle,
+    });
     return this._breaks;
   }
 }
@@ -415,7 +436,7 @@ class HeadTailClassifier extends AbstractClassifier {
    */
   constructor(values, precision) {
     super(values, precision);
-    this.type = 'headtail';
+    this.type = "headtail";
   }
 
   /**
@@ -425,7 +446,10 @@ class HeadTailClassifier extends AbstractClassifier {
    * @returns {number[]}
    */
   classify(nClasses) {
-    this.breaks = headtail(this._values, { nb: nClasses, precision: this.precision });
+    this.breaks = headtail(this._values, {
+      nb: nClasses,
+      precision: this.precision,
+    });
     return this._breaks;
   }
 }
@@ -443,7 +467,7 @@ class PrettyBreaksClassifier extends AbstractClassifier {
    */
   constructor(values, precision) {
     super(values, precision);
-    this.type = 'pretty';
+    this.type = "pretty";
   }
 
   /**
@@ -453,7 +477,10 @@ class PrettyBreaksClassifier extends AbstractClassifier {
    * @returns {number[]}
    */
   classify(nClasses) {
-    this.breaks = pretty(this._values, { nb: nClasses, precision: this.precision });
+    this.breaks = pretty(this._values, {
+      nb: nClasses,
+      precision: this.precision,
+    });
     return this._breaks;
   }
 }

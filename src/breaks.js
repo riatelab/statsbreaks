@@ -5,7 +5,7 @@ import { jenks } from "./method-jenks.js";
 import { msd } from "./method-msd.js";
 import { geometricProgression } from "./method-geometric-progression.js";
 import { headtail } from "./method-headtail.js";
-import { pretty } from './method-pretty';
+import { pretty } from "./method-pretty";
 import { UnknownMethodError } from "./errors.js";
 
 /**
@@ -17,7 +17,7 @@ import { UnknownMethodError } from "./errors.js";
  * @param {object} options - Optional parameters
  * @param {string} [options.method=quantile] - Classification method (quantile, q6, equal, jenks, msd, geometric, headtail)
  * @param {number} [options.nb = 5] - Number of classes desired
- * @param {number} [options.round = 2] - Number of digits
+ * @param {number} [options.precision = 2] - Number of digits
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @param {number} [options.k = 1] - Number of standard deviations taken into account (msd method only)
  * @param {boolean} [options.middle = true] - To have the average as a class center (msd method only)

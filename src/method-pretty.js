@@ -34,21 +34,21 @@ function prettyNumber(x, rounded = true) {
 }
 
 /**
- * Pretty breaks method (generate breaks that are equally spaced round values which cover the range of values
+ * Pretty breaks method (generate breaks that are equally spaced precision values which cover the range of values
  * in the input array - the breaks are chosen so that they are 1, 2, or 5 times a power of 10).
  * Note that this method can return fewer classes than requested.
  *
  * @param {number[]} data - An array of numerical values.
  * @param {object} options - Optional parameters
  * @param {number} [options.nb = 5] - Number of classes desired
- * @param {number} [options.round = 2] - Number of digits
+ * @param {number} [options.precision = 2] - Number of digits
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
  *
  */
 export function pretty(data, options = {}) {
   data = data.filter((d) => isNumber(d)).map((x) => +x);
-  const round = isNumber(options.round) ? options.round : 2;
+  const precision = isNumber(options.precision) ? options.precision : 2;
   const minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
   const nb = isNumber(options.nb) ? options.nb : 5;
@@ -65,8 +65,8 @@ export function pretty(data, options = {}) {
 
   let breaks = arange(minY, maxY + 0.5 * d, d);
 
-  if (Number.isInteger(round)) {
-    breaks = roundarray(breaks, round);
+  if (Number.isInteger(precision)) {
+    breaks = roundarray(breaks, precision);
   }
   if (!minmax) {
     breaks = breaks.slice(1, -1);

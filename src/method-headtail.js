@@ -12,7 +12,7 @@ import { mean } from "./helpers/mean";
  * @param {number[]} data - An array of numerical values.
  * @param {object} options - Optional parameters
  * @param {number} [options.nb = 5] - Number of classes desired
- * @param {number} [options.round = 2] - Number of digits
+ * @param {number} [options.precision = 2] - Number of digits
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
  * @throws {TooFewValuesError} - If the number of values is less than the number of classes.
@@ -22,7 +22,7 @@ import { mean } from "./helpers/mean";
 export function headtail(data, options = {}) {
   data = data.filter((d) => isNumber(d)).map((x) => +x);
   let nb = isNumber(options.nb) ? options.nb : 5;
-  let round = isNumber(options.round) ? options.round : 2;
+  let precision = isNumber(options.precision) ? options.precision : 2;
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
 
@@ -56,15 +56,15 @@ export function headtail(data, options = {}) {
   breaks.push(max(data));
 
   // Output
-  if (Number.isInteger(round)) {
-    breaks = roundarray(breaks, round);
+  if (Number.isInteger(precision)) {
+    breaks = roundarray(breaks, precision);
   }
   if (!minmax) {
     breaks = breaks.slice(1, -1);
   }
 
-  if (Number.isInteger(round)) {
-    breaks = roundarray(breaks, round);
+  if (Number.isInteger(precision)) {
+    breaks = roundarray(breaks, precision);
   }
   if (!minmax) {
     breaks = breaks.slice(1, -1);

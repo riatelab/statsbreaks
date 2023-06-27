@@ -10,7 +10,7 @@ import { TooFewValuesError } from './errors';
  *
  * @param {number[]} data - An array of numerical values.
  * @param {object} options - Optional parameters
- * @param {number} [options.round = 2] - Number of digits
+ * @param {number} [options.precision = 2] - Number of digits
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
  * @throws {TooFewValuesError} - If the number of values is less than the number of classes.
@@ -19,7 +19,7 @@ import { TooFewValuesError } from './errors';
 
 export function q6(data, options = {}) {
   data = data.filter((d) => isNumber(d)).map((x) => +x);
-  let round = isNumber(options.round) ? options.round : 2;
+  let precision = isNumber(options.precision) ? options.precision : 2;
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
   if (6 > data.length) throw new TooFewValuesError();
@@ -33,8 +33,8 @@ export function q6(data, options = {}) {
     quantil(data, 1),
   ];
 
-  if (Number.isInteger(round)) {
-    breaks = roundarray(breaks, round);
+  if (Number.isInteger(precision)) {
+    breaks = roundarray(breaks, precision);
   }
   if (!minmax) {
     breaks = breaks.slice(1, -1);

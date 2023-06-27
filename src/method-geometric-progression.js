@@ -2,7 +2,7 @@ import { isNumber } from "./helpers/is-number";
 import { min } from "./helpers/min";
 import { max } from "./helpers/max";
 import { roundarray } from "./helpers/rounding";
-import { ValuesInferiorOrEqualToZeroError } from './errors';
+import { ValuesInferiorOrEqualToZeroError } from "./errors";
 
 /**
  * Geometric progression
@@ -12,7 +12,7 @@ import { ValuesInferiorOrEqualToZeroError } from './errors';
  * @param {number[]} data - An array of numerical values.
  * @param {object} options - Optional parameters
  * @param {number} [options.nb = 5] - Number of classes desired
- * @param {number} [options.round = 2] - Number of digits
+ * @param {number} [options.precision = 2] - Number of digits
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
  * @throws {ValuesInferiorOrEqualToZeroError} - If input array contains negative or zero values.
@@ -22,7 +22,7 @@ import { ValuesInferiorOrEqualToZeroError } from './errors';
 export function geometricProgression(data, options = {}) {
   data = data.filter((d) => isNumber(d)).map((x) => +x);
   let nb = isNumber(options.nb) ? options.nb : 5;
-  let round = isNumber(options.round) ? options.round : 2;
+  let precision = isNumber(options.precision) ? options.precision : 2;
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
 
@@ -50,8 +50,8 @@ export function geometricProgression(data, options = {}) {
 
   // Output
   breaks = breaks.sort((a, b) => a - b);
-  if (Number.isInteger(round)) {
-    breaks = roundarray(breaks, round);
+  if (Number.isInteger(precision)) {
+    breaks = roundarray(breaks, precision);
   }
   if (!minmax) {
     breaks = breaks.slice(1, -1);
