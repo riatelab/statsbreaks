@@ -9,6 +9,11 @@ export { geometricProgression } from "./method-geometric-progression";
 export { arithmeticProgression } from "./method-arithmetic-progression";
 export { pretty } from "./method-pretty";
 export {
+  ValuesInferiorOrEqualToZeroError,
+  TooFewValuesError,
+  UnknownMethodError,
+} from "./errors.js";
+export {
   ArithmeticProgressionClassifier,
   CustomBreaksClassifier,
   EqualClassifier,
