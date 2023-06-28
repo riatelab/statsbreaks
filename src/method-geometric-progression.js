@@ -2,7 +2,7 @@ import { isNumber } from "./helpers/is-number";
 import { min } from "./helpers/min";
 import { max } from "./helpers/max";
 import { roundarray } from "./helpers/rounding";
-import { ValuesInferiorOrEqualToZeroError } from "./errors";
+import { TooFewValuesError, ValuesInferiorOrEqualToZeroError } from "./errors";
 
 /**
  * Geometric progression
@@ -16,6 +16,7 @@ import { ValuesInferiorOrEqualToZeroError } from "./errors";
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
  * @throws {ValuesInferiorOrEqualToZeroError} - If input array contains negative or zero values.
+ * @throws {TooFewValuesError} - If the number of values is less than the number of classes.
  *
  */
 
@@ -25,6 +26,8 @@ export function geometricProgression(data, options = {}) {
   let precision = isNumber(options.precision) ? options.precision : 2;
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
+
+  if (nb > data.length) throw new TooFewValuesError();
 
   // With geometric progression, the series of values
   // should not contain negative or zero values.
