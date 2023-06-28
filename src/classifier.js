@@ -372,12 +372,15 @@ class CustomBreaksClassifier extends AbstractClassifier {
    * Create a classifier using custom (user defined) breaks.
    *
    * @param {number[]} values
+   * @param {number[]} breaks - The break values to use.
    * @param precision
    */
   constructor(values, precision, breaks) {
     super(values, precision);
     this.type = "custom";
-    this.breaks = breaks;
+    if (breaks) {
+      this.breaks = breaks;
+    }
   }
 
   /**
