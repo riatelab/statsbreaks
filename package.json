@@ -24,7 +24,14 @@
     "discretization",
     "classification"
   ],
-  "author": "Nicolas Lambert",
+  "author": {
+    "name": "Nicolas Lambert",
+    "email": "nicolas.lambert@cnrs.fr"
+  },
+  "contributors": [{
+    "name": "Matthieu Viry",
+    "email": "matthieu.viry@cnrs.fr"
+  }],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/neocarto/statsbreaks/issues"
