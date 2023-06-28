@@ -12,6 +12,7 @@ import { geometricProgression } from "./method-geometric-progression";
 import { headtail } from "./method-headtail";
 import { isNumber } from "./helpers/is-number";
 import { pretty } from "./method-pretty";
+import {arithmeticProgression} from './method-arithmetic-progression';
 
 class AbstractClassifier {
   constructor(values, precision) {
@@ -311,8 +312,6 @@ class GeometricProgressionClassifier extends AbstractClassifier {
    *
    * @param {number[]} values
    * @param precision
-   * @throws {TooFewValuesError}
-   * @throws {ValuesInferiorOrEqualToZeroError}
    */
   constructor(values, precision) {
     super(values, precision);
@@ -324,6 +323,8 @@ class GeometricProgressionClassifier extends AbstractClassifier {
    *
    * @param {number} nClasses - The number of classes to classify the series into.
    * @returns {number[]}
+   * @throws {TooFewValuesError}
+   * @throws {ValuesInferiorOrEqualToZeroError}
    */
   classify(nClasses) {
     this.breaks = geometricProgression(this._values, {
@@ -368,7 +369,7 @@ class Q6Classifier extends AbstractClassifier {
  */
 class CustomBreaksClassifier extends AbstractClassifier {
   /**
-   * Create a classifier using using custom (user defined) breaks.
+   * Create a classifier using custom (user defined) breaks.
    *
    * @param {number[]} values
    * @param precision
@@ -475,6 +476,7 @@ class PrettyBreaksClassifier extends AbstractClassifier {
    *
    * @param {number} nClasses - The number of classes to classify the series into.
    * @returns {number[]}
+   * @throws {TooFewValuesError}
    */
   classify(nClasses) {
     this.breaks = pretty(this._values, {
@@ -485,7 +487,40 @@ class PrettyBreaksClassifier extends AbstractClassifier {
   }
 }
 
+/**
+ * Class representing a classifier using "Arithmetic progression" classification method.
+ * @extends AbstractClassifier
+ */
+class ArithmeticProgressionClassifier extends AbstractClassifier {
+  /**
+   * Create a classifier using "Arithmetic progression" classification method.
+   *
+   * @param {number[]} values
+   * @param precision
+   */
+  constructor(values, precision) {
+    super(values, precision);
+    this.type = "arithmetic";
+  }
+
+  /**
+   * Classify the series into the given number of classes.
+   *
+   * @param {number} nClasses - The number of classes to classify the series into.
+   * @returns {number[]}
+   * @throws {TooFewValuesError}
+   */
+  classify(nClasses) {
+    this.breaks = arithmeticProgression(this._values, {
+      nb: nClasses,
+      precision: this.precision,
+    });
+    return this._breaks;
+  }
+}
+
 export {
+  ArithmeticProgressionClassifier,
   CustomBreaksClassifier,
   EqualClassifier,
   GeometricProgressionClassifier,
