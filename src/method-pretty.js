@@ -57,13 +57,19 @@ export function pretty(data, options = {}) {
   const low = min(data);
   const high = max(data);
 
-  const rg = prettyNumber(high - low, false);
-  const d = prettyNumber(rg / (nb - 1), true);
+  let breaks;
 
-  const minY = Math.floor(low / d) * d;
-  const maxY = Math.ceil(high / d) * d;
+  if (nb === 1) {
+    breaks = [low, high];
+  } else {
+    const rg = prettyNumber(high - low, false);
+    const d = prettyNumber(rg / (nb - 1), true);
 
-  let breaks = arange(minY, maxY + 0.5 * d, d);
+    const minY = Math.floor(low / d) * d;
+    const maxY = Math.ceil(high / d) * d;
+
+    breaks = arange(minY, maxY + 0.5 * d, d);
+  }
 
   if (Number.isInteger(precision)) {
     breaks = roundarray(breaks, precision);

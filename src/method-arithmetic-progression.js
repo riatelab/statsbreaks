@@ -2,10 +2,10 @@ import { isNumber } from "./helpers/is-number";
 import { min } from "./helpers/min";
 import { max } from "./helpers/max";
 import { roundarray } from "./helpers/rounding";
-import { TooFewValuesError, ValuesInferiorOrEqualToZeroError } from "./errors";
+import { TooFewValuesError } from "./errors";
 
 /**
- * Geometric progression
+ * Arithmetic progression
  *
  * Example: {@link https://observablehq.com/@neocartocnrs/hello-statsbreaks Observable notebook}
  *
@@ -15,12 +15,11 @@ import { TooFewValuesError, ValuesInferiorOrEqualToZeroError } from "./errors";
  * @param {number} [options.precision = 2] - Number of digits
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
- * @throws {ValuesInferiorOrEqualToZeroError} - If input array contains negative or zero values.
  * @throws {TooFewValuesError} - If the number of values is less than the number of classes.
  *
  */
 
-export function geometricProgression(data, options = {}) {
+export function arithmeticProgression(data, options = {}) {
   data = data.filter((d) => isNumber(d)).map((x) => +x);
   let nb = isNumber(options.nb) ? options.nb : 5;
   let precision = isNumber(options.precision) ? options.precision : 2;
@@ -29,35 +28,33 @@ export function geometricProgression(data, options = {}) {
 
   if (nb > data.length) throw new TooFewValuesError();
 
-  // With geometric progression, the series of values
-  // should not contain negative or zero values.
-  if (data.some((d) => d <= 0)) throw new ValuesInferiorOrEqualToZeroError();
+  let breaks = [];
+  let denominator = 0;
 
-  let breaks = new Array(nb + 1);
-  const mn = min(data);
-  const mx = max(data);
-  const logMax = Math.log(mx) / Math.LN10;
-  const logMin = Math.log(mn) / Math.LN10;
-  const logDiff = (logMax - logMin) / nb;
-
-  // The first value is the minimum value.
-  breaks[0] = mn;
-
-  // Compute the antilogarithm of each log boundary.
-  for (let i = 1; i < nb; i++) {
-    breaks[i] = Math.pow(10, logMin + i * logDiff);
+  for (let i = 0; i <= nb; i++) {
+    denominator += i;
   }
 
-  // The last value is the maximum value.
-  breaks[nb] = mx;
+  let tmpMin = min(data);
+  let tmpMax = max(data);
+  let step = (tmpMax - tmpMin) / denominator;
 
-  // Output
-  breaks = breaks.sort((a, b) => a - b);
+  for (let i = 0; i <= nb; i++) {
+    if (i === 0) {
+      breaks[i] = tmpMin;
+    } else if (i === nb) {
+      breaks[i] = tmpMax;
+    } else {
+      breaks[i] = breaks[i - 1] + (i * step);
+    }
+  }
+
   if (Number.isInteger(precision)) {
     breaks = roundarray(breaks, precision);
   }
   if (!minmax) {
     breaks = breaks.slice(1, -1);
   }
+
   return breaks;
 }

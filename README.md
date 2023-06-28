@@ -1,5 +1,5 @@
 
-**statsbreaks** is a javascript package whose objective is to split (to classify/to discretize) a quantitative data set into a (k) number of classes or thematic categories.
+**statsbreaks** is a javascript package whose objective is to split (to classify/to discretize) a quantitative dataset into a (k) number of classes or thematic categories.
 The general aim is to create a choropleth map, for example with [bertin.js](https://observablehq.com/@neocartocnrs/bertin-js-chropoleth?collection=@neocartocnrs/bertin).
 
 ![logo](img/statsbreaks.svg)
@@ -92,9 +92,18 @@ The **`geometric`** progression is suited to highly skewed distributions. It con
 breaks(data, {method: "geometric", nb: 5, precision: 2 })
 ~~~
 
+#### `arithmetic`
+
+The **`arithmetic`** progression is suited to right-skewed distributions (i.e. with many low values and few high ones). It consists in constructing classes whose amplitude increases in an arithmetical progression.
+
+~~~js
+breaks(data, {method: "arithmetic", nb: 5, precision: 2 })
+~~~
+
+
 #### `msd`
 
-The *mean strandard deviation* method (**`msd`**) is based on significant values (mean and standard deviation). This type of classification is ideal for symmetrical (normal, Gaussian) distributions and should be solely in the instance. When the distribution is skewed, it is preferable tu use another method.
+The *mean standard deviation* method (**`msd`**) is based on significant values (mean and standard deviation). This type of classification is ideal for symmetrical (normal, Gaussian) distributions and should be solely in the instance. When the distribution is skewed, it is preferable tu use another method.
 
 ~~~js
 breaks(data, {method: "msd", k: 0.5, middle: true, precision: 2 })
@@ -120,7 +129,7 @@ breaks(data, {method: "pretty", nb: 5, precision: 2 })
 
 For each classification method, you can also use an object-oriented API.
 
-Classes availables are: `JenksClassifier`, `EqualClassifier`, `GeometricProgressionClassifier`, `HeadTailClassifier`, `MsdClassifier`, `PrettyBreaksClassifier`, `QuantileClassifier`, `Q6Classifier` and `CustomBreaksClassifier`.
+Classes available are: `JenksClassifier`, `EqualClassifier`, `GeometricProgressionClassifier`, `HeadTailClassifier`, `MsdClassifier`, `PrettyBreaksClassifier`, `QuantileClassifier`, `Q6Classifier`, `ArithmeticProgressionClassifier` and `CustomBreaksClassifier`.
   
 For example
 
@@ -128,7 +137,7 @@ For example
 series = new discr.JenksClassifier(data, 2)
 ~~~
 
-with data is an array of values and 2 the precision.
+where data is an array of values and 2 the precision.
 
 **`classify`** computes the break values for the given number of classes and returns it.
 
@@ -136,7 +145,7 @@ with data is an array of values and 2 the precision.
 series.classify(7)
 ~~~
 
-**`countByClass`** count how many individual by class
+**`countByClass`** count how many individuals in each class
 
 ~~~js
 series.countByClass()
