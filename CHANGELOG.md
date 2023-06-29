@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Fix *head tail breaks* when `minmax` option is `true` (fixes #20).
+- Fix *head tail breaks* when `minmax` option is `false` (fixes #20).
 
 ## 1.0.0 (2023-06-28)
 
