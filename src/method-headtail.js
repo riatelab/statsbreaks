@@ -63,11 +63,5 @@ export function headtail(data, options = {}) {
     breaks = breaks.slice(1, -1);
   }
 
-  if (Number.isInteger(precision)) {
-    breaks = roundarray(breaks, precision);
-  }
-  if (!minmax) {
-    breaks = breaks.slice(1, -1);
-  }
   return breaks;
 }
