@@ -15,7 +15,6 @@ import { mean } from "./helpers/mean";
  * @param {number} [options.precision = 2] - Number of digits
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
- * @throws {TooFewValuesError} - If the number of values is less than the number of classes.
  *
  */
 
@@ -63,11 +62,5 @@ export function headtail(data, options = {}) {
     breaks = breaks.slice(1, -1);
   }
 
-  if (Number.isInteger(precision)) {
-    breaks = roundarray(breaks, precision);
-  }
-  if (!minmax) {
-    breaks = breaks.slice(1, -1);
-  }
   return breaks;
 }
