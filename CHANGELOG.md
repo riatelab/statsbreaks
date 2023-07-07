@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Fix *head tail breaks* when `minmax` option is `false` (fixes #20).
+- Improve validation of the `nb` parameter (fixes #25).
 
 ## 1.0.0 (2023-06-28)
 

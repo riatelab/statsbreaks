@@ -3,7 +3,8 @@ import { roundarray } from './helpers/rounding';
 import { min } from './helpers/min';
 import { max } from './helpers/max';
 import { arange } from './helpers/arange';
-import {TooFewValuesError} from './errors';
+import { TooFewValuesError } from './errors';
+import { validateNbParameter } from './helpers/parameter-validation';
 
 function prettyNumber(x, rounded = true) {
   let exp = Math.floor(Math.log10(x));
@@ -44,6 +45,8 @@ function prettyNumber(x, rounded = true) {
  * @param {number} [options.precision = 2] - Number of digits
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
+ * @throws {TooFewValuesError} - If the number of values is less than the number of classes.
+ * @throws {InvalidNumberOfClassesError} - If the number of classes is not valid (not an integer or less than 2).
  *
  */
 export function pretty(data, options = {}) {
@@ -51,25 +54,19 @@ export function pretty(data, options = {}) {
   const precision = isNumber(options.precision) ? options.precision : 2;
   const minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
-  const nb = isNumber(options.nb) ? options.nb : 5;
+  const nb = options.nb != null ? validateNbParameter(options.nb) : 5;
   if (nb > data.length) throw new TooFewValuesError();
 
   const low = min(data);
   const high = max(data);
 
-  let breaks;
+  const rg = prettyNumber(high - low, false);
+  const d = prettyNumber(rg / (nb - 1), true);
 
-  if (nb === 1) {
-    breaks = [low, high];
-  } else {
-    const rg = prettyNumber(high - low, false);
-    const d = prettyNumber(rg / (nb - 1), true);
+  const minY = Math.floor(low / d) * d;
+  const maxY = Math.ceil(high / d) * d;
 
-    const minY = Math.floor(low / d) * d;
-    const maxY = Math.ceil(high / d) * d;
-
-    breaks = arange(minY, maxY + 0.5 * d, d);
-  }
+  let breaks = arange(minY, maxY + 0.5 * d, d);
 
   if (Number.isInteger(precision)) {
     breaks = roundarray(breaks, precision);

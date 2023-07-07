@@ -12,7 +12,7 @@ import { geometricProgression } from "./method-geometric-progression";
 import { headtail } from "./method-headtail";
 import { isNumber } from "./helpers/is-number";
 import { pretty } from "./method-pretty";
-import {arithmeticProgression} from './method-arithmetic-progression';
+import { arithmeticProgression } from './method-arithmetic-progression';
 
 class AbstractClassifier {
   constructor(values, precision) {

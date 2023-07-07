@@ -3,6 +3,7 @@ import { min } from "./helpers/min";
 import { max } from "./helpers/max";
 import { roundarray } from "./helpers/rounding";
 import { TooFewValuesError, ValuesInferiorOrEqualToZeroError } from "./errors";
+import { validateNbParameter } from './helpers/parameter-validation';
 
 /**
  * Geometric progression
@@ -17,12 +18,12 @@ import { TooFewValuesError, ValuesInferiorOrEqualToZeroError } from "./errors";
  * @returns {number[]} - An array of breaks.
  * @throws {ValuesInferiorOrEqualToZeroError} - If input array contains negative or zero values.
  * @throws {TooFewValuesError} - If the number of values is less than the number of classes.
- *
+ * @throws {InvalidNumberOfClassesError} - If the number of classes is not valid (not an integer or less than 2).
  */
 
 export function geometricProgression(data, options = {}) {
   data = data.filter((d) => isNumber(d)).map((x) => +x);
-  let nb = isNumber(options.nb) ? options.nb : 5;
+  let nb = options.nb != null ? validateNbParameter(options.nb) : 5;
   let precision = isNumber(options.precision) ? options.precision : 2;
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
