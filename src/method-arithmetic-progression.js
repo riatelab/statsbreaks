@@ -22,7 +22,7 @@ import { validateNbParameter } from './helpers/parameter-validation';
 
 export function arithmeticProgression(data, options = {}) {
   data = data.filter((d) => isNumber(d)).map((x) => +x);
-  let nb = options.nb ? validateNbParameter(options.nb) : 5;
+  let nb = options.nb != null ? validateNbParameter(options.nb) : 5;
   let precision = isNumber(options.precision) ? options.precision : 2;
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
