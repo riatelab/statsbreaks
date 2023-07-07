@@ -31,7 +31,15 @@ methodThatUseNbParameter.forEach(function(method) {
         const breaks = statsbreaks.breaks([1, 2, 3, 4, 5, 6, 7, 8], { method, nb: -1 });
       },
       new statsbreaks.InvalidNumberOfClassesError("The 'nb' parameter must be superior or equal to 2"),
-      `on method ${method}, should throw error if the number of classes inferior to 2`,
+      `on method ${method}, should throw error if the number of classes is negative`,
+    );
+
+    // Test with zero
+    t.throws(function() {
+        const breaks = statsbreaks.breaks([1, 2, 3, 4, 5, 6, 7, 8], { method, nb: 0 });
+      },
+      new statsbreaks.InvalidNumberOfClassesError("The 'nb' parameter must be superior or equal to 2"),
+      `on method ${method}, should throw error if the number of classes is equal to zero`,
     );
 
     // Test with a string that can't be converted to a positive integer
