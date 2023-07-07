@@ -4,13 +4,13 @@ const statsbreaks = require("../dist/index.min.js");
 
 test("jenks", function (t) {
   t.test('should return correct breaks for the test data', function (t) {
-    const breaks = statsbreaks.breaks(X, { method: 'jenks', nbClass: 5 });
+    const breaks = statsbreaks.breaks(X, { method: 'jenks', nb: 5 });
     t.same(breaks, [0.13, 75.29, 192.05, 370.50, 722.85, 4111.45]);
     t.end();
   });
 
   t.throws(function() {
-      const breaks = statsbreaks.breaks([1, 2, 3], { method: 'jenks', nbClass: 5 });
+      const breaks = statsbreaks.breaks([1, 2, 3], { method: 'jenks', nb: 5 });
     },
     new statsbreaks.TooFewValuesError('Too few values for the given number of breaks'),
     'should throw error if the number of classes is too high',

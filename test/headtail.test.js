@@ -4,7 +4,7 @@ const statsbreaks = require("../dist/index.min.js");
 
 test("headtail", function (t) {
   t.test('should return correct breaks for the test data', function (t) {
-    const breaks = statsbreaks.breaks(X, { method: 'headtail', nbClass: 3 });
+    const breaks = statsbreaks.breaks(X, { method: 'headtail', nb: 3 });
     t.same(breaks, [0.13, 125.93, 811.26, 4111.45]);
     t.end();
   });
