@@ -3,6 +3,7 @@ import { roundarray } from "./helpers/rounding";
 import { min } from "./helpers/min";
 import { max } from "./helpers/max";
 import { mean } from "./helpers/mean";
+import { validateNbParameter } from './helpers/parameter-validation';
 
 /**
  * Head/tail algorithm v1.0 based on Jiang (2019).
@@ -15,12 +16,12 @@ import { mean } from "./helpers/mean";
  * @param {number} [options.precision = 2] - Number of digits
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
- *
+ * @throws {InvalidNumberOfClassesError} - If the number of classes is not valid (not an integer or less than 2).
  */
 
 export function headtail(data, options = {}) {
   data = data.filter((d) => isNumber(d)).map((x) => +x);
-  let nb = isNumber(options.nb) ? options.nb : 5;
+  let nb = options.nb != null ? validateNbParameter(options.nb) : 5;
   let precision = isNumber(options.precision) ? options.precision : 2;
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;

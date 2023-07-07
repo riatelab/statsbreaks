@@ -28,7 +28,15 @@ class UnknownMethodError extends Error {
   }
 }
 
+class InvalidNumberOfClassesError extends Error {
+  constructor(message) {
+    super(message || "Invalid number of classes");
+    this.name = 'InvalidNumberOfClassesError';
+  }
+}
+
 export {
+  InvalidNumberOfClassesError,
   ValuesInferiorOrEqualToZeroError,
   TooFewValuesError,
   UnknownMethodError,

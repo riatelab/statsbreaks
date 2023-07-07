@@ -1,6 +1,7 @@
 import { isNumber } from "./helpers/is-number";
 import { roundarray } from "./helpers/rounding";
 import { TooFewValuesError } from './errors';
+import { validateNbParameter } from './helpers/parameter-validation';
 
 function breaks(data, lower_class_limits, n_classes) {
   const kclass = [];
@@ -101,7 +102,7 @@ function getMatrices(data, n_classes) {
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
  * @throws {TooFewValuesError} - If the number of (unique) values is less than the number of classes.
- *
+ * @throws {InvalidNumberOfClassesError} - If the number of classes is not valid (not an integer or less than 2).
  */
 export function jenks(data, options = {}) {
   data = data
@@ -111,7 +112,7 @@ export function jenks(data, options = {}) {
       return a - b;
     });
 
-  let nb = isNumber(options.nb) ? options.nb : 5;
+  let nb = options.nb != null ? validateNbParameter(options.nb) : 5;
   let precision = isNumber(options.precision) ? options.precision : 2;
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;

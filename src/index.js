@@ -9,6 +9,7 @@ export { geometricProgression } from "./method-geometric-progression";
 export { arithmeticProgression } from "./method-arithmetic-progression";
 export { pretty } from "./method-pretty";
 export {
+  InvalidNumberOfClassesError,
   ValuesInferiorOrEqualToZeroError,
   TooFewValuesError,
   UnknownMethodError,
