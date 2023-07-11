@@ -32,6 +32,7 @@ class AbstractClassifier {
     this._median = null;
     this._stddev = null;
     this._counts = null;
+    this._splitValues = null;
   }
 
   /**
@@ -174,6 +175,35 @@ class AbstractClassifier {
       this._counts = counts;
     }
     return this._counts;
+  }
+
+  /**
+   * Split the series by class.
+   *
+   * @returns {number[][]}
+   */
+  splitByClass() {
+    if (this._breaks === null) {
+      throw new Error(
+        'Breaks are not set, please call the "classify" method first'
+      );
+    }
+    if (this._splitValues === null) {
+      const splitValues = [];
+      const sortedValues = this._values.slice().sort((a, b) => a - b);
+      this._breaks
+        .slice(1,-1)
+        .forEach((b, i) => {
+        // First cluster
+        if (i === 0) splitValues.push(sortedValues.filter((d) => d <= b));
+        // Intermediate clusters
+        if (i !== 0) splitValues.push(sortedValues.filter((d) => d > this._breaks[i - 1] && d <= b));
+        // Last cluster
+        if (i === this._breaks.length - 1) splitValues.push(sortedValues.filter((d) => d > b));
+      });
+      this._splitValues = splitValues;
+    }
+    return this._splitValues;
   }
 
   /**
