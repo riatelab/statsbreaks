@@ -4,6 +4,7 @@
 
 - Fix *head tail breaks* when `minmax` option is `false` (fixes #20).
 - Improve validation of the `nb` parameter (fixes #25).
+- Add *splitByClass* to classifier methods (fixed [#24](https://github.com/riatelab/statsbreaks/issues/24))
 
 ## 1.0.0 (2023-06-28)
 
