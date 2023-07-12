@@ -151,6 +151,13 @@ series.classify(7)
 series.countByClass()
 ~~~
 
+**`splitByClass`** creturns values for each class
+
+~~~js
+series.splitByClass()
+~~~
+
+
 **`getClass`** get the class index for a specific individual. For example, the value 30000 is in the index 2 class, i.e. the third class.
 
 ~~~js
