@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Don't round values if `precision` option is explicitly set to `null` (partially fixes [#28](https://github.com/riatelab/statsbreaks/issues/28)).
+
 ## 1.0.2 (2023-07-12)
 
 - Add *splitByClass* to classifier methods (fixed [#24](https://github.com/riatelab/statsbreaks/issues/24))

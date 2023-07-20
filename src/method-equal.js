@@ -2,7 +2,7 @@ import { isNumber } from "./helpers/is-number";
 import { roundarray } from "./helpers/rounding";
 import { min } from "./helpers/min";
 import { max } from "./helpers/max";
-import { validateNbParameter } from './helpers/parameter-validation';
+import {validateNbParameter, validatePrecisionParameter} from './helpers/parameter-validation';
 import { TooFewValuesError } from "./errors";
 
 /**
@@ -18,13 +18,14 @@ import { TooFewValuesError } from "./errors";
  * @returns {number[]} - An array of breaks.
  * @throws {TooFewValuesError} - If the number of values is less than the number of classes.
  * @throws {InvalidNumberOfClassesError} - If the number of classes is not valid (not an integer or less than 2).
+ * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
  *
  */
 
 export function equal(data, options = {}) {
   data = data.filter((d) => isNumber(d)).map((x) => +x);
   let nb = options.nb != null ? validateNbParameter(options.nb) : 5;
-  let precision = isNumber(options.precision) ? options.precision : 2;
+  let precision = validatePrecisionParameter(options.precision);
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
   if (nb > data.length) throw new TooFewValuesError();
@@ -37,7 +38,8 @@ export function equal(data, options = {}) {
   }
 
   breaks = breaks.sort((a, b) => a - b);
-  if (Number.isInteger(precision)) {
+
+  if (precision !== null) {
     breaks = roundarray(breaks, precision);
   }
   if (!minmax) {

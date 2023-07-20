@@ -46,8 +46,8 @@ The **`breaks()`** function allows to compute breaks according to several discre
 Parameters
 
 - <b>`method`</b>: method of discretization. "quantile", "q6", "equal", "msd", "jenks", "geometric", "headtail" or "pretty" (default: "quantile")
-- <b>`nb`</b>: number of classes (default: "5")
-- <b>`precision`</b>: rounding of values. 2 transform 35667.877876 to 35667.87 -2 transform 35667.877876 to 35600. (default: 2)
+- <b>`nb`</b>: number of classes (default: 5)
+- <b>`precision`</b>: rounding of values. 2 transform 35667.877876 to 35667.87 -2 transform 35667.877876 to 35600. Set it to `null` to indicate breaks shouldn't be rounded (default: 2)
 - <b>`minmax`</b>: a boolean to keep or remove min and max values (default: true)
 - <b>`middle`</b>: a boolean to have the average as a class center. Available with "msd" method only (default: false)
 - <b>`k`</b>: Number of standard deviations taken into account. Available with "msd" method only (default: 1)
@@ -151,7 +151,7 @@ series.classify(7)
 series.countByClass()
 ~~~
 
-**`splitByClass`** creturns values for each class
+**`splitByClass`** returns values for each class
 
 ~~~js
 series.splitByClass()

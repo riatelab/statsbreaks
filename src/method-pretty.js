@@ -4,7 +4,7 @@ import { min } from './helpers/min';
 import { max } from './helpers/max';
 import { arange } from './helpers/arange';
 import { TooFewValuesError } from './errors';
-import { validateNbParameter } from './helpers/parameter-validation';
+import {validateNbParameter, validatePrecisionParameter} from './helpers/parameter-validation';
 
 function prettyNumber(x, rounded = true) {
   let exp = Math.floor(Math.log10(x));
@@ -47,11 +47,12 @@ function prettyNumber(x, rounded = true) {
  * @returns {number[]} - An array of breaks.
  * @throws {TooFewValuesError} - If the number of values is less than the number of classes.
  * @throws {InvalidNumberOfClassesError} - If the number of classes is not valid (not an integer or less than 2).
+ * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
  *
  */
 export function pretty(data, options = {}) {
   data = data.filter((d) => isNumber(d)).map((x) => +x);
-  const precision = isNumber(options.precision) ? options.precision : 2;
+  const precision = validatePrecisionParameter(options.precision);
   const minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
   const nb = options.nb != null ? validateNbParameter(options.nb) : 5;
@@ -68,7 +69,7 @@ export function pretty(data, options = {}) {
 
   let breaks = arange(minY, maxY + 0.5 * d, d);
 
-  if (Number.isInteger(precision)) {
+  if (precision !== null) {
     breaks = roundarray(breaks, precision);
   }
   if (!minmax) {

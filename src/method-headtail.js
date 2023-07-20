@@ -3,7 +3,7 @@ import { roundarray } from "./helpers/rounding";
 import { min } from "./helpers/min";
 import { max } from "./helpers/max";
 import { mean } from "./helpers/mean";
-import { validateNbParameter } from './helpers/parameter-validation';
+import {validateNbParameter, validatePrecisionParameter} from './helpers/parameter-validation';
 
 /**
  * Head/tail algorithm v1.0 based on Jiang (2019).
@@ -17,12 +17,13 @@ import { validateNbParameter } from './helpers/parameter-validation';
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
  * @throws {InvalidNumberOfClassesError} - If the number of classes is not valid (not an integer or less than 2).
+ * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
  */
 
 export function headtail(data, options = {}) {
   data = data.filter((d) => isNumber(d)).map((x) => +x);
   let nb = options.nb != null ? validateNbParameter(options.nb) : 5;
-  let precision = isNumber(options.precision) ? options.precision : 2;
+  let precision = validatePrecisionParameter(options.precision);
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
 
@@ -56,7 +57,7 @@ export function headtail(data, options = {}) {
   breaks.push(max(data));
 
   // Output
-  if (Number.isInteger(precision)) {
+  if (precision !== null) {
     breaks = roundarray(breaks, precision);
   }
   if (!minmax) {

@@ -4,6 +4,7 @@ import { min } from "./helpers/min";
 import { max } from "./helpers/max";
 import { mean } from "./helpers/mean";
 import { deviation } from "./helpers/deviation";
+import {validatePrecisionParameter} from './helpers/parameter-validation';
 
 /**
  * Classification based on mean and standard deviation
@@ -17,6 +18,7 @@ import { deviation } from "./helpers/deviation";
  * @param {boolean} [options.middle = true] - To have the average as a class center
  * @param {boolean} [options.minmax = true] - To keep or delete min and max
  * @returns {number[]} - An array of breaks.
+ * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
  *
  */
 
@@ -25,7 +27,7 @@ export function msd(data, options = {}) {
   let k = isNumber(options.k) ? options.k : 1;
   let middle =
     options.middle === false || options.middle == undefined ? false : true;
-  let precision = isNumber(options.precision) ? options.precision : 2;
+  let precision = validatePrecisionParameter(options.precision);
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
 
@@ -62,7 +64,7 @@ export function msd(data, options = {}) {
   }
 
   breaks = breaks.sort((a, b) => a - b);
-  if (Number.isInteger(precision)) {
+  if (precision !== null) {
     breaks = roundarray(breaks, precision);
   }
   if (!minmax) {

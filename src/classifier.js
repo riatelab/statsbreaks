@@ -10,9 +10,9 @@ import { q6 } from "./method-q6";
 import { msd } from "./method-msd";
 import { geometricProgression } from "./method-geometric-progression";
 import { headtail } from "./method-headtail";
-import { isNumber } from "./helpers/is-number";
 import { pretty } from "./method-pretty";
 import { arithmeticProgression } from './method-arithmetic-progression';
+import {validatePrecisionParameter} from './helpers/parameter-validation';
 
 class AbstractClassifier {
   constructor(values, precision) {
@@ -22,7 +22,7 @@ class AbstractClassifier {
       );
     }
     this._values = values;
-    this.precision = precision == null || !isNumber(precision) ? 2 : precision;
+    this.precision = validatePrecisionParameter(precision);
     this.type = null;
     this.nClasses = null;
     this._breaks = null;
@@ -246,6 +246,7 @@ class JenksClassifier extends AbstractClassifier {
    *
    * @param {number[]} values
    * @param precision
+   * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
    */
   constructor(values, precision) {
     super(values, precision);
@@ -278,6 +279,7 @@ class QuantileClassifier extends AbstractClassifier {
    *
    * @param {number[]} values
    * @param precision
+   * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
    */
   constructor(values, precision) {
     super(values, precision);
@@ -310,6 +312,7 @@ class EqualClassifier extends AbstractClassifier {
    *
    * @param {number[]} values
    * @param precision
+   * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
    */
   constructor(values, precision) {
     super(values, precision);
@@ -342,6 +345,7 @@ class GeometricProgressionClassifier extends AbstractClassifier {
    *
    * @param {number[]} values
    * @param precision
+   * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
    */
   constructor(values, precision) {
     super(values, precision);
@@ -375,6 +379,7 @@ class Q6Classifier extends AbstractClassifier {
    *
    * @param {number[]} values
    * @param precision
+   * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
    */
   constructor(values, precision) {
     super(values, precision);
@@ -404,6 +409,7 @@ class CustomBreaksClassifier extends AbstractClassifier {
    * @param {number[]} values
    * @param {number[]} breaks - The break values to use.
    * @param precision
+   * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
    */
   constructor(values, precision, breaks) {
     super(values, precision);
@@ -435,6 +441,7 @@ class MsdClassifier extends AbstractClassifier {
    *
    * @param {number[]} values
    * @param precision
+   * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
    */
   constructor(values, precision) {
     super(values, precision);
@@ -467,6 +474,7 @@ class HeadTailClassifier extends AbstractClassifier {
    *
    * @param {number[]} values
    * @param precision
+   * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
    */
   constructor(values, precision) {
     super(values, precision);
@@ -498,6 +506,7 @@ class PrettyBreaksClassifier extends AbstractClassifier {
    *
    * @param {number[]} values
    * @param precision
+   * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
    */
   constructor(values, precision) {
     super(values, precision);
@@ -530,6 +539,7 @@ class ArithmeticProgressionClassifier extends AbstractClassifier {
    *
    * @param {number[]} values
    * @param precision
+   * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
    */
   constructor(values, precision) {
     super(values, precision);
