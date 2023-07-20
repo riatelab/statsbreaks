@@ -1,7 +1,7 @@
 import { isNumber } from "./helpers/is-number";
 import { roundarray } from "./helpers/rounding";
 import { TooFewValuesError } from './errors';
-import { validateNbParameter } from './helpers/parameter-validation';
+import {validateNbParameter, validatePrecisionParameter} from './helpers/parameter-validation';
 
 function breaks(data, lower_class_limits, n_classes) {
   const kclass = [];
@@ -103,6 +103,7 @@ function getMatrices(data, n_classes) {
  * @returns {number[]} - An array of breaks.
  * @throws {TooFewValuesError} - If the number of (unique) values is less than the number of classes.
  * @throws {InvalidNumberOfClassesError} - If the number of classes is not valid (not an integer or less than 2).
+ * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
  */
 export function jenks(data, options = {}) {
   data = data
@@ -113,7 +114,7 @@ export function jenks(data, options = {}) {
     });
 
   let nb = options.nb != null ? validateNbParameter(options.nb) : 5;
-  let precision = isNumber(options.precision) ? options.precision : 2;
+  let precision = validatePrecisionParameter(options.precision);
   let minmax =
     options.minmax === true || options.minmax == undefined ? true : false;
 
@@ -124,7 +125,7 @@ export function jenks(data, options = {}) {
   let lower_class_limits = matrices.lower_class_limits;
   let result = breaks(data, lower_class_limits, nb);
 
-  if (Number.isInteger(precision)) {
+  if (precision !== null) {
     result = roundarray(result, precision);
   }
   if (!minmax) {

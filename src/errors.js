@@ -35,8 +35,16 @@ class InvalidNumberOfClassesError extends Error {
   }
 }
 
+class InvalidPrecisionError extends Error {
+  constructor(message) {
+    super(message || "Invalid precision");
+    this.name = 'InvalidPrecisionError';
+  }
+}
+
 export {
   InvalidNumberOfClassesError,
+  InvalidPrecisionError,
   ValuesInferiorOrEqualToZeroError,
   TooFewValuesError,
   UnknownMethodError,
