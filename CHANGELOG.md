@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.3 (2023-07-20)
 
 - Don't round values if `precision` option is explicitly set to `null` (partially fixes [#28](https://github.com/riatelab/statsbreaks/issues/28)).
 
