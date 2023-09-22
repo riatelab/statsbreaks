@@ -459,6 +459,7 @@ class MsdClassifier extends AbstractClassifier {
     this.breaks = msd(this._values, {
       precision: this.precision,
       middle: middle,
+      k: k,
     });
     return this._breaks;
   }
