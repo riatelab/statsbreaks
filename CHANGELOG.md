@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Add 'nested means' method (and `NestedMeansClassifier` class).
+
+## 1.0.4 (2023-09-22)
+
 - Fix missing `k` options when using the `classify` method of `MsdClassifier` (parameter `k` was ignored / not transferred to the underlying `msd` function).
 
 ## 1.0.3 (2023-07-20)

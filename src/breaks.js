@@ -7,6 +7,7 @@ import { geometricProgression } from "./method-geometric-progression.js";
 import { arithmeticProgression } from "./method-arithmetic-progression.js";
 import { headtail } from "./method-headtail.js";
 import { pretty } from "./method-pretty";
+import { nestedMeans } from "./method-nested-means";
 import { UnknownMethodError } from "./errors.js";
 
 /**
@@ -57,6 +58,9 @@ export function breaks(data, options = {}) {
       break;
     case "arithmetic":
       breaks = arithmeticProgression(data, options);
+      break;
+    case "nestedmeans":
+      breaks = nestedMeans(data, options);
       break;
     default:
       throw new UnknownMethodError();

@@ -14,6 +14,7 @@ const allBreaksMethods = [
   'pretty',
   'q6',
   'quantile',
+  'nestedmeans',
 ];
 
 // Run the tests for each method
@@ -21,7 +22,7 @@ allBreaksMethods.forEach(function(method) {
   test(`The 'precision' parameter, `, function (t) {
     // Test with a negative integer
     t.throws(function() {
-        const breaks = statsbreaks.breaks(X, { method, nb: 5, precision: -1 });
+        const breaks = statsbreaks.breaks(X, { method, nb: 4, precision: -1 });
       },
       new InvalidPrecisionError("The 'precision' parameter must be superior or equal to 0"),
       `should be superior or equal to 0 (on method ${method})`,
@@ -29,7 +30,7 @@ allBreaksMethods.forEach(function(method) {
 
     // Test with a floating-point number
     t.throws(function() {
-        const breaks = statsbreaks.breaks(X, { method, nb: 5, precision: 2.7 });
+        const breaks = statsbreaks.breaks(X, { method, nb: 4, precision: 2.7 });
       },
       new InvalidPrecisionError("The 'precision' parameter must be an integer"),
       `should be an integer (on method ${method})`,
@@ -37,7 +38,7 @@ allBreaksMethods.forEach(function(method) {
 
     // Test with a string that can't be converted to a positive integer
     t.throws(function() {
-        const breaks = statsbreaks.breaks(X, { method, nb: 5, precision: 'abc' });
+        const breaks = statsbreaks.breaks(X, { method, nb: 4, precision: 'abc' });
       },
       new InvalidPrecisionError("The 'precision' parameter must be a number"),
       `should can be converted to a number (on method ${method})`,
@@ -45,7 +46,7 @@ allBreaksMethods.forEach(function(method) {
 
     // Test with a boolean
     t.throws(function() {
-        const breaks = statsbreaks.breaks(X, { method, nb: 5, precision: true });
+        const breaks = statsbreaks.breaks(X, { method, nb: 4, precision: true });
       },
       new InvalidPrecisionError("The 'precision' parameter must be a number"),
       `should can be converted to a number (on method ${method})`,
@@ -53,7 +54,7 @@ allBreaksMethods.forEach(function(method) {
 
     // Test with an empty object
     t.throws(function() {
-        const breaks = statsbreaks.breaks(X, { method, nb: 5, precision: {} });
+        const breaks = statsbreaks.breaks(X, { method, nb: 4, precision: {} });
       },
       new InvalidPrecisionError("The 'precision' parameter must be a number"),
       `should can be converted to a number (on method ${method})`,
@@ -62,7 +63,7 @@ allBreaksMethods.forEach(function(method) {
     // Test with a string that can be converted to a positive integer
     t.test(`on method ${method}, should succeed if the precision is a string that can be converted to a positive integer`,
       function (t) {
-        const breaks = statsbreaks.breaks(X, { method, nb: 3, precision: '0' });
+        const breaks = statsbreaks.breaks(X, { method, nb: 4, precision: '0' });
         breaks.forEach(function(b) {
           // Since we rounded to 0 digits, the breaks should be integers:
           t.same(b % 1, 0);
@@ -92,8 +93,8 @@ allBreaksMethods.forEach(function(method) {
         8.489563360489422e-20, 9.406542183353323e-20, 1.029681535089398e-19,
         1.1135590709189528e-19, 1.189769547198936e-19
       ];
-      const breaks = statsbreaks.breaks(values, { method, nb: 5, precision: null });
-      // We dont test that on the pretty method because it retuns breaks
+      const breaks = statsbreaks.breaks(values, { method, nb: 8, precision: null });
+      // We dont test that on the pretty method because it returns breaks
       // for which the min and the max are not the min and the max of the values
       if (method !== 'pretty') {
         const expectedBreaksMin = 3.6643508679064443e-28;
@@ -126,10 +127,12 @@ allBreaksMethods.forEach(function(method) {
         8.489563360489422e-20, 9.406542183353323e-20, 1.029681535089398e-19,
         1.1135590709189528e-19, 1.189769547198936e-19
       ];
-      const breaks = statsbreaks.breaks(values, { method, nb: 5, minmax: false }); // Dont take minmax as it will help for comparison
-      breaks.forEach((b, i) => {
-        t.same(b, 0);
-      });
+      if (method !== 'nestedmeans') {
+        const breaks = statsbreaks.breaks(values, {method, nb: 5, minmax: false}); // Dont take minmax as it will help for comparison
+        breaks.forEach((b, i) => {
+          t.same(b, 0);
+        });
+      }
       t.end();
     });
 

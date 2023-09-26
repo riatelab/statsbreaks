@@ -4,7 +4,9 @@ const X = require('./test-data');
 
 const InvalidNumberOfClassesError = statsbreaks.InvalidNumberOfClassesError;
 
-// Methods that use the 'nb' parameter (so 'msd' and 'q6' are not included)
+// Methods that use the 'nb' parameter
+// (so 'msd' and 'q6' are not included ; 'nestedmeans' is not included either
+// because it only takes a number of classes that is a power of 2)
 const methodThatUseNbParameter = [
   'equal',
   'quantile',

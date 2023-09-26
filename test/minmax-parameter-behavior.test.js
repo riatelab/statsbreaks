@@ -12,6 +12,7 @@ const methods = [
   'pretty',
   'msd',
   'q6',
+  'nestedmeans',
 ];
 
 // Run the tests for each method

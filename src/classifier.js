@@ -12,7 +12,8 @@ import { geometricProgression } from "./method-geometric-progression";
 import { headtail } from "./method-headtail";
 import { pretty } from "./method-pretty";
 import { arithmeticProgression } from './method-arithmetic-progression';
-import {validatePrecisionParameter} from './helpers/parameter-validation';
+import { nestedMeans } from './method-nested-means';
+import { validatePrecisionParameter } from './helpers/parameter-validation';
 
 class AbstractClassifier {
   constructor(values, precision) {
@@ -531,6 +532,40 @@ class PrettyBreaksClassifier extends AbstractClassifier {
 }
 
 /**
+ * Class representing a classifier using "Nested means" classification method.
+ * @extends AbstractClassifier
+ */
+class NestedMeansClassifier extends AbstractClassifier {
+  /**
+   * Create a classifier using "Nested means" classification method.
+   *
+   * @param {number[]} values
+   * @param precision
+   * @throws {InvalidPrecisionError} - If the precision is not valid (not null, not an integer or less than 0).
+   */
+  constructor(values, precision) {
+    super(values, precision)
+    this.type = 'nested-means';
+  }
+
+  /**
+   * Classify the series into the given number of classes (must be a power of 2).
+   *
+   * @param {number} nClasses - The number of classes to classify the series into.
+   * @returns {number[]}
+   * @throws {TooFewValuesError}
+   * @throws {InvalidNumberOfClassesError}
+   */
+  classify(nClasses) {
+    this.breaks = nestedMeans(this._values, {
+      nb: nClasses,
+      precision: this.precision,
+    });
+    return this._breaks;
+  }
+}
+
+/**
  * Class representing a classifier using "Arithmetic progression" classification method.
  * @extends AbstractClassifier
  */
@@ -571,6 +606,7 @@ export {
   HeadTailClassifier,
   JenksClassifier,
   MsdClassifier,
+  NestedMeansClassifier,
   PrettyBreaksClassifier,
   QuantileClassifier,
   Q6Classifier,
