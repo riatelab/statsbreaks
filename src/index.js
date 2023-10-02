@@ -8,6 +8,7 @@ export { msd } from "./method-msd.js";
 export { geometricProgression } from "./method-geometric-progression";
 export { arithmeticProgression } from "./method-arithmetic-progression";
 export { pretty } from "./method-pretty";
+export { nestedMeans } from "./method-nested-means";
 export {
   InvalidNumberOfClassesError,
   InvalidPrecisionError,
@@ -23,6 +24,7 @@ export {
   HeadTailClassifier,
   JenksClassifier,
   MsdClassifier,
+  NestedMeansClassifier,
   PrettyBreaksClassifier,
   QuantileClassifier,
   Q6Classifier,
