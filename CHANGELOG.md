@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.5 (2023-10-02)
 
 - Add 'nested means' method (and `NestedMeansClassifier` class).
 
