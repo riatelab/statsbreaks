@@ -192,15 +192,15 @@ class AbstractClassifier {
     if (this._splitValues === null) {
       const splitValues = [];
       const sortedValues = this._values.slice().sort((a, b) => a - b);
-      this._breaks
-        .slice(1,-1)
+      const breaksWithoutMinMax = this._breaks.slice(1,-1);
+      breaksWithoutMinMax
         .forEach((b, i) => {
         // First cluster
         if (i === 0) splitValues.push(sortedValues.filter((d) => d <= b));
         // Intermediate clusters
-        if (i !== 0) splitValues.push(sortedValues.filter((d) => d > this._breaks[i - 1] && d <= b));
+        if (i !== 0) splitValues.push(sortedValues.filter((d) => d > breaksWithoutMinMax[i - 1] && d <= b));
         // Last cluster
-        if (i === this._breaks.length - 1) splitValues.push(sortedValues.filter((d) => d > b));
+        if (i === breaksWithoutMinMax.length - 1) splitValues.push(sortedValues.filter((d) => d > b));
       });
       this._splitValues = splitValues;
     }
