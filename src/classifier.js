@@ -190,19 +190,10 @@ class AbstractClassifier {
       );
     }
     if (this._splitValues === null) {
-      const splitValues = [];
       const sortedValues = this._values.slice().sort((a, b) => a - b);
-      this._breaks
-        .slice(1,-1)
-        .forEach((b, i) => {
-        // First cluster
-        if (i === 0) splitValues.push(sortedValues.filter((d) => d <= b));
-        // Intermediate clusters
-        if (i !== 0) splitValues.push(sortedValues.filter((d) => d > this._breaks[i - 1] && d <= b));
-        // Last cluster
-        if (i === this._breaks.length - 1) splitValues.push(sortedValues.filter((d) => d > b));
-      });
-      this._splitValues = splitValues;
+      this._splitValues = this._breaks.slice(1)
+        .map((d, i) => sortedValues
+          .filter((v) => v <= d && v > (i === 0 ? -Infinity : this._breaks[i])));
     }
     return this._splitValues;
   }
