@@ -4,7 +4,7 @@ import { min } from "./helpers/min";
 import { max } from "./helpers/max";
 import { mean } from "./helpers/mean";
 import { deviation } from "./helpers/deviation";
-import {validatePrecisionParameter} from './helpers/parameter-validation';
+import { validatePrecisionParameter } from "./helpers/parameter-validation";
 
 /**
  * Classification based on mean and standard deviation
@@ -57,7 +57,7 @@ export function msd(data, options = {}) {
       i = i + sd * k;
     }
     i = avg - sd * k;
-    while (i > min) {
+    while (i > mn) {
       breaks.push(i);
       i = i - sd * k;
     }
